@@ -55,6 +55,22 @@ async function findAll(req, res) {
   }
 }
 
+async function updateUser(req, res){
+  var userId = req.params.id;
+  var update = req.body;
+
+  try {
+    const user = await usuarios.findByIdAndUpdate(userId, update);
+    return res.send({
+      user: user
+    });
+  } catch (error) {
+    return res.status(400).send({
+      status: 'No se ha podido modificar'
+    });
+  }
+}
+
 async function loginUser(req, res) {
   try {
     const usuario = req.body;
@@ -94,4 +110,4 @@ function isValidPassword(user, password) {
   return result;
 }
 
-module.exports = { pruebas, saveUser, findAll, loginUser };
+module.exports = { pruebas, saveUser, findAll, loginUser, updateUser };
