@@ -76,12 +76,14 @@ async function loginUser(req, res) {
     const usuario = req.body;
     const usuarioLeido = await usuarios.findOne({ 'email': usuario.email });
     if (usuarioLeido) {
+      console.log("usuario:");
       console.log(usuarioLeido);
       if (!isValidPassword(usuarioLeido, usuario.password)) {
         console.log('Invalid Password');
       } else {
         // SI gethash ES TRUE, GENERA UN TOKEN JWT
-        if (params.gethash) {
+        if (req.body.gethash) {
+          console.log("ole");
           console.log(usuario.password);
           return res.status(200).send({
             token: jwt.createToken(usuario)
