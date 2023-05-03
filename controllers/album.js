@@ -61,7 +61,9 @@ async function getAlbum(req, res){
         if(!album){
             return res.status(404).send("El artista no existe");    
         }else{
-            return res.status(200).send({album});
+            return res.status(200).send({
+                status: album
+            });
         }
         
     }catch(error){
