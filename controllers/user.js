@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 var User = require('../models/user')
 const mongoose = require('mongoose');
 const usuarios = mongoose.model('User');
+var jwt = require('../services/jwt');
 
 async function pruebas(req, res) {
   res.status(200).send({ message: "Controlador OK" });
@@ -63,11 +64,15 @@ async function loginUser(req, res) {
       if (!isValidPassword(usuarioLeido, usuario.password)) {
         console.log('Invalid Password');
       } else {
-        console.log(usuario.password);
-        
-        return res.status(200).send({
-          status: usuarioLeido
-        })
+        // SI gethash ES TRUE, GENERA UN TOKEN JWT
+        if (params.gethash) {
+          console.log(usuario.password);
+          return res.status(200).send({
+            token: jwt.createToken(usuario)
+          })
+        } else {
+          return res.send({ status: 'gethash is false' });
+        }
       }
     } else {
       return res.send({ status: 'not found' });
