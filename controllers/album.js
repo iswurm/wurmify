@@ -70,10 +70,10 @@ async function getAlbum(req, res){
             if(err){
                 return res.status(404).send("Error");    
             }else{
-                if(!album){
+                if(!albums){
                     return res.status(404).send("El album no existe");    
                 }else{
-                    return res.status(200).send({ album });
+                    return res.status(200).send({ albums });
                 }
             }
         });
@@ -106,8 +106,8 @@ async function updateAlbum(req, res){
 async function deleteAlbum(req, res){
     var albumId = req.params.id;
     try{
-        const album = await Album.findOneAndRemove({albumId});
-        return res.status(200).send("Borrado de album con éxito");    
+        await Album.findOneAndRemove({albumId});
+        //return res.status(200).send("Borrado de album con éxito");    
     }catch(error){
         return res.status(400).send({
             status: 'failure en removeAlbum'
