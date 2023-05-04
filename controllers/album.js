@@ -44,9 +44,18 @@ async function saveAlbum(req, res) {
 }
 
 async function findAll(req, res) {
+    var artistId = req.params.artist;
+
     try {
-        const albumes = await Album.find({});
-        return res.send(albumes && albumes.length ? albumes : []);
+        if(!artistId){
+            const albumes = await Album.find({}).sort('title');
+            return res.send(albumes && albumes.length ? albumes : []);
+        }else{
+            const albumes = await Album.find({artist: artistId}).sort('year');
+            return res.send(albumes && albumes.length ? albumes : []);
+        }
+
+        
     } catch (error) {
         return res.status(400).send({
             status: 'failure'
@@ -57,20 +66,53 @@ async function findAll(req, res) {
 async function getAlbum(req, res){
     var albumId = req.params.id;
     try{
-        const album = await Album.findById({albumId});
-        if(!album){
-            return res.status(404).send("El artista no existe");    
-        }else{
-            return res.status(200).send({
-                status: album
-            });
-        }
+        const album = await Album.findById({albumId}).populate({path: 'artist'}).exec((err, albums)=>{
+            if(err){
+                return res.status(404).send("Error");    
+            }else{
+                if(!album){
+                    return res.status(404).send("El album no existe");    
+                }else{
+                    return res.status(200).send({ album });
+                }
+            }
+        });
         
     }catch(error){
         return res.status(400).send({
-            status: 'failure'
+            status: 'failure en getAlbum'
         });
     }
 }
 
-module.exports = { pruebas, saveAlbum, findAll, getAlbum };
+async function updateAlbum(req, res){
+    var albumId = req.params.id;
+    var update = req.body;
+  
+    try {
+      const album = await Album.findByIdAndUpdate(albumId, update);
+      return res.send({
+        album: album
+      })
+    } catch (error) {
+      return res.status(400).send({
+        status: 'No se ha podido modificar'
+      });
+    }
+}
+
+//REVISAR TODOS LOS METODOS E IMPLEMENTAR METODOS PARA LAS IMAGENES DE LOS ALBUMES (CLASE 38)
+
+async function deleteAlbum(req, res){
+    var albumId = req.params.id;
+    try{
+        const album = await Album.findOneAndRemove({albumId});
+        return res.status(200).send("Borrado de album con éxito");    
+    }catch(error){
+        return res.status(400).send({
+            status: 'failure en removeAlbum'
+        });
+    }
+}
+
+module.exports = { pruebas, saveAlbum, findAll, getAlbum, updateAlbum, deleteAlbum };
