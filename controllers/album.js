@@ -66,7 +66,8 @@ async function findAll(req, res) {
 async function getAlbum(req, res){
     var albumId = req.params.id;
     try{
-        const album = await Album.findById({albumId}).populate({path: 'artist'}).exec((err, albums)=>{
+        //const album = await Album.findById({albumId}).populate({path: 'artist'}).exec((err, albums)=>{
+        await Album.findById({albumId}).populate({path: 'artist'}).exec((err, albums)=>{
             if(err){
                 return res.status(404).send("Error");    
             }else{
