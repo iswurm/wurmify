@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from './models/user';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app-wurmify';
+  title = 'Wurmify';
+
+  public user: User;
+  public identity: any;
+  public token: any;
+
+  constructor(){
+    this.user = new User('', '', '', '', '', 'ROLE_USER', '');
+  }
+
 }
