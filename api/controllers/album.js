@@ -11,9 +11,6 @@ const mongoose = require('mongoose');
 const artistas = mongoose.model('Artist');
 const albumes = mongoose.model('Album');
 
-async function pruebas(req, res) {
-    res.status(200).send({ message: "Controlador OK" });
-}
 
 async function saveAlbum(req, res) {
     var album = new Album();
@@ -44,29 +41,39 @@ async function saveAlbum(req, res) {
 }
 
 async function findAll(req, res) {
-    var artistId = req.params.artist;
-
+    try {
+        const albumesObtenidos = await albumes.find({}).sort('title');
+        return res.send(albumesObtenidos && albumesObtenidos.length ? albumesObtenidos : []);
+      } catch (error) {
+        return res.status(400).send({
+          status: 'failure'
+        });
+      }
+    /*
     try {
         if(!artistId){
-            const albumes = await Album.find({}).sort('title');
-            return res.send(albumes && albumes.length ? albumes : []);
+            const albumesObtenidos = await albumes.find({}).sort('title');
+            return res.send(albumesObtenidos && albumesObtenidos.length ? albumesObtenidos : []);
         }else{
-            const albumes = await Album.find({artist: artistId}).sort('year');
+            const albumes = await albumes.find({artist: artistId}).sort('year');
             return res.send(albumes && albumes.length ? albumes : []);
         }
-
         
     } catch (error) {
         return res.status(400).send({
             status: 'failure'
         });
-    }
+    }*/
 }
 
 async function getAlbum(req, res){
-    var albumId = req.params.id;
+    
+    console.log("22");
     try{
-        const album = await Album.findById({albumId}).populate({path: 'artist'}).exec((err, albums)=>{
+        const album = await albumes.findByOne({'_id':req.params.id}).populate({path: 'artist'});
+        return res.send(album ? album : {});
+        /*
+        await albumes.findById(albumId).populate({path: 'artist'}).exec((err, album)=>{
             if(err){
                 return res.status(404).send("Error");    
             }else{
@@ -76,7 +83,7 @@ async function getAlbum(req, res){
                     return res.status(200).send({ album });
                 }
             }
-        });
+        });*/
         
     }catch(error){
         return res.status(400).send({
@@ -106,8 +113,8 @@ async function updateAlbum(req, res){
 async function deleteAlbum(req, res){
     var albumId = req.params.id;
     try{
-        const album = await Album.findOneAndRemove({albumId});
-        return res.status(200).send("Borrado de album con éxito");    
+        await Album.findOneAndRemove({albumId});
+        //return res.status(200).send("Borrado de album con éxito");    
     }catch(error){
         return res.status(400).send({
             status: 'failure en removeAlbum'
@@ -115,4 +122,4 @@ async function deleteAlbum(req, res){
     }
 }
 
-module.exports = { pruebas, saveAlbum, findAll, getAlbum, updateAlbum, deleteAlbum };
+module.exports = { saveAlbum, findAll, getAlbum, updateAlbum, deleteAlbum };
