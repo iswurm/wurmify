@@ -89,7 +89,7 @@ async function loginUser(req, res) {
             token: jwt.createToken(usuario)
           })
         } else {
-          return res.send({ status: 'gethash is false' });
+          return res.send({usuarioLeido});
         }
       }
     } else {
