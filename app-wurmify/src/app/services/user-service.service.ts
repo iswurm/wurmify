@@ -12,7 +12,7 @@ export class UserServiceService {
 
   private apiRestUrl = 'http://localhost:3977/api/';
   private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
   };
 
   public identity: any;
@@ -34,6 +34,17 @@ export class UserServiceService {
     let params = JSON.stringify(userToRegister);
     return this.http.post(this.apiRestUrl + 'register', params, this.httpOptions);
 
+  }
+
+
+  updateUser(userToUpdate: User){
+    let params = JSON.stringify(userToUpdate);
+    
+    let headers = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
+      'authorization': this.token })
+    }
+    return this.http.put(this.apiRestUrl + 'update-user/' + userToUpdate._id, params, headers);
   }
 
   getIdentity() {

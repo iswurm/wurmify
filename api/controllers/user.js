@@ -59,6 +59,8 @@ async function updateUser(req, res){
   var userId = req.params.id;
   var update = req.body;
 
+  console.log(userId);
+  console.log(req.user.sub);
   try {
     const user = await usuarios.findByIdAndUpdate(userId, update);
     return res.send({

@@ -1,0 +1,24 @@
+<div class="col-lg-6" *ngIf="identity">
+    <h2>Update User</h2>
+    <form #updateForm="ngForm" (submit)="onSubmit()" class="col-md-10">
+        <p>
+            <label for="">Name:</label>
+            <input type="text" #name="ngModel" name="name" [(ngModel)]="user.name" class="form-control" required>
+            <span *ngIf="!name.valid && name.touched">
+                El nombre es obligatorio
+            </span>
+        </p>
+        <p>
+            <label for="">Surname:</label>
+            <input type="text" #surname="ngModel" name="surname" [(ngModel)]="user.surname" class="form-control" required>
+            <span *ngIf="!surname.valid && surname.touched">
+                Los apellidos son obligatorios
+            </span>
+        </p>
+        <p>
+            <label for="">Email:</label>
+            <input type="text" #email="ngModel" name="email" [(ngModel)]="user.email" class="form-control" required>
+        </p>
+        <input type="submit" value="Update User" class="btn btn-primary">
+    </form>
+</div>
