@@ -1,4 +1,4 @@
-<div *ngIf="identity || token" class="navigation col-lg-1">
+<div *ngIf="identity || token" class="navigation col-lg-12">
     <h1>
         {{title}}
         
@@ -7,7 +7,7 @@
     </nav>
 
     <nav id="userLogged">
-        <span>{{identity.name}}</span>
+        <span id="identity_name">{{identity.name}}</span>
         <span class="btn btn-warning" (click) = "logout()">Log out</span>
         <a [routerLink]="['/mis-datos']">Mis Datos <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a>
         <router-outlet></router-outlet>

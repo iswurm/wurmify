@@ -4,6 +4,8 @@ var User = require('../models/user')
 const mongoose = require('mongoose');
 const usuarios = mongoose.model('User');
 var jwt = require('../services/jwt');
+var fs = require('fs');
+var path = require('path');
 
 async function pruebas(req, res) {
   res.status(200).send({ message: "Controlador OK" });
@@ -55,7 +57,7 @@ async function findAll(req, res) {
   }
 }
 
-async function updateUser(req, res){
+async function updateUser(req, res) {
   var userId = req.params.id;
   var update = req.body;
 
@@ -70,6 +72,49 @@ async function updateUser(req, res){
     return res.status(400).send({
       status: 'No se ha podido modificar'
     });
+  }
+}
+
+async function uploadImage(req, res) {
+  var userId = req.params.id;
+  var fileName = 'No subido';
+
+  if (req.files) {
+    var filePath = req.files.image.path;
+    var fileSplit = filePath.split('\\');
+    var fileName = fileSplit[2];
+    var extSplit = fileName.split('\.');
+    var fileExtension = extSplit[1];
+
+    if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'gif') {
+      try {
+        const user = await usuarios.findByIdAndUpdate(userId, { image: fileName });
+        return res.send({
+          user: user
+        });
+      } catch (error) {
+        return res.status(400).send({
+          status: 'No se ha podido modificar la imagen'
+        });
+      }
+    } else {
+      res.status(200).send({ message: 'Extensión inválida' });
+    }
+
+  } else {
+    res.status(200).send({ message: 'No ha subido imagen' });
+  }
+}
+
+async function getImageFile(req, res) {
+  var imageFile = req.params.imageFile;
+  var pathFile = './uploads/users/' + imageFile;
+  let exists = fs.existsSync(pathFile);
+  console.log(exists);
+  if (exists) {
+    res.sendFile(path.resolve(pathFile));
+  } else {
+    res.status(200).send({ message: 'No tiene imagen' });
   }
 }
 
@@ -91,7 +136,7 @@ async function loginUser(req, res) {
             token: jwt.createToken(usuario)
           })
         } else {
-          return res.send({usuarioLeido});
+          return res.send({ usuarioLeido });
         }
       }
     } else {
@@ -114,4 +159,4 @@ function isValidPassword(user, password) {
   return result;
 }
 
-module.exports = { pruebas, saveUser, findAll, loginUser, updateUser };
+module.exports = { pruebas, saveUser, findAll, loginUser, updateUser, uploadImage, getImageFile };

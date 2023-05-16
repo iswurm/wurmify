@@ -19,6 +19,15 @@
             <label for="">Email:</label>
             <input type="text" #email="ngModel" name="email" [(ngModel)]="user.email" class="form-control" required>
         </p>
+
+        <div class="imageForEdit" *ngIf="user.image && user.image != null">
+            <img src="" alt="">
+        </div>
+
+        <p>
+            <label for="">Profile pic: </label>
+            <input type="file" placeholder="Upload your profile picture" (change)="fileChangeEvent($event)">
+        </p>
         <input type="submit" value="Update User" class="btn btn-primary">
     </form>
 </div>
