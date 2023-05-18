@@ -6,7 +6,7 @@ import { ArtistListComponent } from './components/artist-list/artist-list.compon
 const routes: Routes = [
   {path: '', component: UserEditComponent},
   {path: 'mis-datos', component: UserEditComponent},
-  {path: '**', component: ArtistListComponent}
+  {path: '**', component: ArtistListComponent},
   {path: 'artists/:page', component: ArtistListComponent}
 ];
 

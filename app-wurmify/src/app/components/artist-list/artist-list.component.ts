@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ActivatedRoute, Params} from '@angular/router';
 
-import { UserServiceService } from '../services/user-service.service';
-import { Artist } from '../models/artist';
+import { UserServiceService } from 'src/app/services/user-service.service';
+import { Artist } from 'src/app/models/artist';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { Artist } from '../models/artist';
   export class ArtistListComponent {
 
     public titulo: String;
-    public artists: Artist[];
+    public artists: Artist[] = [];
     public identity: any;
     public token: any;
     public url: String = 'http://localhost:3977/api/';
