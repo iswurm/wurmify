@@ -10,6 +10,7 @@
         <span id="identity_name">{{identity.name}}</span>
         <span class="btn btn-warning" (click) = "logout()">Log out</span>
         <a [routerLink]="['/mis-datos']">Mis Datos <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a>
+        <a [routerLink]="['/artists', 1]">Artistas <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a>
         <router-outlet></router-outlet>
     </nav>
 </div>
