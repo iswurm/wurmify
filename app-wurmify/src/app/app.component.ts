@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import { User } from './models/user';
 import { UserServiceService } from './services/user-service.service';
 
@@ -15,8 +16,9 @@ export class AppComponent{
   public userRegister: User;
   public identity: any;
   public token: any;
+  public url: String = 'http://localhost:3977/api/';
 
-  constructor(private _userService:UserServiceService){
+  constructor(private _userService:UserServiceService, private _route: ActivatedRoute, private _router: Router){
     this.user = new User('', '', '', '', '', 'ROLE_USER', '');
     this.userRegister = new User('', '', '', '', '', 'ROLE_USER', '');
   }
@@ -74,6 +76,7 @@ export class AppComponent{
     localStorage.clear();
     this.token = null;
     this.identity = null;
+    this._router.navigate(['/']);
   }
 
 }

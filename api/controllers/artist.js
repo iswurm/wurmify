@@ -54,7 +54,7 @@ async function findAll(req, res) {
 async function getArtist(req, res){
     var artistId = req.params.id;
     try{
-        const artist = await Artist.findById({artistId});
+        const artist = await artistas.findOne({ '_id': artistId });
         if(!artist){
             return res.status(404).send("El artista no existe");    
         }else{
@@ -73,11 +73,11 @@ async function getArtistPaginado(req, res){
     var itemsPerPage = 3;
     try{
         const artists = await Artist.find().sort('name').paginate(page, itemsPerPage);
+        console.log(artists);
         if(!artists){
             return res.status(404).send("No existen artistas"); 
         }else{
             return res.status(200).send({
-                pages: total,
                 artists: artists
             });
         }
@@ -105,5 +105,50 @@ async function updateArtist(req, res){
     }
   }
 
+  async function uploadImage(req, res) {
+    var artistId = req.params.id;
+    var fileName = 'No subido';
+    console.log(req.files);
+    if (req.files) {
+      var filePath = req.files.image.path;
+      var fileSplit = filePath.split('\\');
+      var fileName = fileSplit[2];
+      var extSplit = fileName.split('\.');
+      var fileExtension = extSplit[1];
+  
+      if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'gif') {
+        try {
+          const artist = await artistas.findByIdAndUpdate(artistId, { image: fileName });
+          console.log(filePath);
+          return res.send({
+            image: fileName,
+            artist: artist
+          });
+        } catch (error) {
+          return res.status(400).send({
+            status: 'No se ha podido modificar la imagen'
+          });
+        }
+      } else {
+        res.status(200).send({ message: 'Extensión inválida' });
+      }
+  
+    } else {
+      res.status(200).send({ message: 'No ha subido imagen' });
+    }
+  }
+  
+  async function getImageFile(req, res) {
+    var imageFile = req.params.imageFile;
+    var pathFile = './uploads/artists/' + imageFile;
+    let exists = fs.existsSync(pathFile);
+    console.log(exists);
+    if (exists) {
+      res.sendFile(path.resolve(pathFile));
+    } else {
+      res.status(200).send({ message: 'No tiene imagen' });
+    }
+  }
 
-module.exports = { pruebas, saveArtist, findAll, getArtist, getArtistPaginado, updateArtist };
+
+module.exports = { pruebas, saveArtist, findAll, getArtist, getArtistPaginado, updateArtist, uploadImage, getImageFile };
