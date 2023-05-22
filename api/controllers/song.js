@@ -7,6 +7,7 @@ var mongoosePagination = require('mongoose-pagination');
 var Album = require('../models/album');
 var Song = require('../models/song');
 const mongoose = require('mongoose');
+const song = require('../models/song');
 const artistas = mongoose.model('Artist');
 const albumes = mongoose.model('Album');
 const songs = mongoose.model('Song');
@@ -128,4 +129,47 @@ async function deleteSong(req, res){
     }
 }
 
-module.exports = { pruebas, saveSong, findAll, getSong, updateSong, deleteSong };
+async function getSongFile(req, res){
+    var songFile = req.params.songFile;
+    var pathFile = './uploads/songs/'+songFile;
+    let exists = fs.existsSync(pathFile);
+    if (exists) {
+        res.sendFile(path.resolve(pathFile));
+      } else {
+        res.status(200).send({ message: 'No tiene imagen' });
+      }
+}
+
+async function uploadFile(req, res){
+    var songId = req.params.id;
+    var fileName = 'No subido';
+  
+    if (req.files) {
+      var filePath = req.files.image.path;
+      var fileSplit = filePath.split('\\');
+      var fileName = fileSplit[2];
+      var extSplit = fileName.split('\.');
+      var fileExtension = extSplit[1];
+  
+      if (fileExtension == 'mp3' || fileExtension == 'ogg') {
+        try {
+          const song = await songs.findByIdAndUpdate(songId, { file: fileName });
+          return res.send({
+            file: fileName,
+            song: song
+          });
+        } catch (error) {
+          return res.status(400).send({
+            status: 'No se ha podido modificar la canción'
+          });
+        }
+      } else {
+        res.status(200).send({ message: 'Extensión inválida' });
+      }
+  
+    } else {
+      res.status(200).send({ message: 'No ha subido imagen' });
+    }
+}
+
+module.exports = { pruebas, saveSong, findAll, getSong, updateSong, deleteSong, uploadFile, getSongFile };

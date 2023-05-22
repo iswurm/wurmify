@@ -12,5 +12,7 @@ router.get('/song/:id', SongController.getSong);
 router.post('/song', SongController.saveSong);
 router.put('/update-song/:id', md_auth.ensureAuth, SongController.updateSong);
 router.delete('/song/:id', SongController.deleteSong);
+router.post('/upload-song-file/:id', [md_auth.ensureAuth, md_upload], SongController.uploadFile);
+router.get('/get-song-file/:songFie', md_auth.ensureAuth, SongController.getSongFile);
 
 module.exports = router;
