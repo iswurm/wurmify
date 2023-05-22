@@ -49,14 +49,15 @@ async function findAll(req, res) {
 
     try {
         if(!albumId){
-            const songs = await Song.find({}).sort('title');
-            //return res.send(songs && songs.length ? songs : []);
+            const canciones = await songs.find({});
+            console.log(canciones);
+            return res.send(canciones && canciones.length ? canciones : []);
         }else{
-            const songs = await Song.find({album: albumId}).sort('number');
-            //return res.send(songs && songs.length ? songs : []);
+            const canciones = await songs.find({album: albumId}).sort('number');
+            return res.send(canciones && canciones.length ? canciones : []);
         }
 
-        songs.populate({
+        canciones.populate({
             path: 'album',
             populate: {
                 path: 'artist',
@@ -83,7 +84,7 @@ async function findAll(req, res) {
 async function getSong(req, res){
     var songId = req.params.id;
     try{
-        await Song.findById({songId}).populate({path: 'album'}).exec((err, song)=>{
+        await songs.findById({songId}).populate({path: 'album'}).exec((err, song)=>{
             if(err){
                 return res.status(500).send("Error");    
             }else{
@@ -108,7 +109,7 @@ async function updateSong(req, res){
   
     try {
         //Song.findByIdAndUpdate(songId, update, (err, songUpdated) => {...}); SEGUIR PROBANDO CON ESTO
-        await Song.findByIdAndUpdate(songId, update);
+        await songs.findByIdAndUpdate(songId, update);
     } catch (error) {
       return res.status(400).send({
         status: 'No se ha podido modificar'
@@ -119,7 +120,7 @@ async function updateSong(req, res){
 async function deleteSong(req, res){
     var songId = req.params.id;
     try{
-        await Song.findOneAndRemove({songId});
+        await songs.findOneAndRemove({songId});
         //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
         //return res.status(200).send("Borrado de album con éxito");    
     }catch(error){
@@ -145,12 +146,12 @@ async function uploadFile(req, res){
     var fileName = 'No subido';
   
     if (req.files) {
-      var filePath = req.files.image.path;
+      var filePath = req.files.song.path;
       var fileSplit = filePath.split('\\');
       var fileName = fileSplit[2];
       var extSplit = fileName.split('\.');
       var fileExtension = extSplit[1];
-  
+      console.log(filePath);
       if (fileExtension == 'mp3' || fileExtension == 'ogg') {
         try {
           const song = await songs.findByIdAndUpdate(songId, { file: fileName });

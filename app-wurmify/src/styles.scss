@@ -50,3 +50,325 @@ img{
     border-bottom: 4px solid #84BD00;
     padding-bottom: 4px;
 }
+
+// Mixins
+@mixin text--uppercase {
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 1.2px;
+}
+
+html {
+  --main-bg-color: #0e0e0e;
+  --main-font-color: #b9b5b5;
+  --main-highlight-color: #fff;
+  --main-link-active-color: #fff;
+  --main-border-color: #8080804d;
+  --activity-bg-color: #000;
+  --footer-height: 100px;
+  --main-bg-color-dark: #202020; 
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Lato', Arial, sans-serif;
+  line-height: 1.4;
+  font-size: 14px;
+  color: var(--main-font-color);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style-type: none;
+}
+
+// Buttons ////////////////////////////////
+.button {
+  padding: 15px 10px;
+  background: transparent;
+  border: 1px solid var(--main-font-color);
+  border-radius: 20px;
+  color: var(--main-font-color);
+  text-transform: uppercase;
+  font-size: 12px;
+  transition: all 0.3s;
+  letter-spacing: 1.2px;
+  &:hover {
+    background: #fff;
+    color: #000;
+    border: 1px solid #fff;
+  }
+}
+
+// Links ////////////////////////////////
+.link {
+  display: inline-block;
+  color: var(--main-font-color);
+  padding: 5px;
+  text-decoration: none;
+  transition: all 0.5s;
+  
+  &:visited,
+  &:focus
+  &:hover,
+  &:active {
+    color: var(--main-font-color);
+  }
+  
+  &:hover,
+  &:active,
+  &:focus {
+    color: var(--main-link-active-color);
+  }
+}
+
+// Main wrapper ////////////////////////////////
+.wrapper {
+  display: grid;
+  background: var(--main-bg-color);
+  grid-gap: 10px;
+  min-height: 100vh;
+  grid-template-columns: 100%;
+  grid-template-areas: 
+    "main"
+    "sidebar";
+  @media (min-width: 800px) {
+    grid-template-columns: 200px auto;
+    grid-template-areas:
+    "sidebar main";
+  }
+  @media (min-width: 1200px) {
+    grid-template-columns: 200px auto 200px;
+     grid-template-areas:
+       "sidebar main social";
+  }
+}
+
+// Sidebar ////////////////////////////////
+.sidebar {
+  background: var(--activity-bg-color);
+  grid-area: sidebar;
+}
+
+.sidebar li {
+  line-height: 2;
+}
+
+.sidebar__header {
+  margin-bottom: 5px;
+}
+
+.sidebar__header {
+  @include text--uppercase;
+}
+
+// Main content ////////////////////////////////
+main {
+  grid-area: main;
+  padding: 10px 20px;
+  @media (min-width: 800px) {
+    padding: 10px 20px calc(var(--footer-height) + 40px);
+    margin-bottom: 20px;
+  }
+}
+
+.main__header h1 {
+  margin-bottom: 20px;
+  font-size: 38px;
+}
+
+.main__nav {
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--main-border-color);
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: start;
+  grid-gap: 10px;
+}
+
+// Main content - nav //////////////////////////
+.main__nav {
+  .link {
+    @include text--uppercase;
+    font-size: 13px;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 11px;
+  
+    &.is-active {
+      color: var(--main-link-active-color);
+      border-bottom: 3px solid green;
+    }
+    
+    &:nth-of-type(2),
+    &:nth-of-type(3),
+    &:nth-of-type(4),
+    &:nth-of-type(5) {
+      display: none;
+    }
+    @media (min-width: 800px) {
+      &:nth-of-type(2),
+      &:nth-of-type(3),
+      &:nth-of-type(4),
+      &:nth-of-type(5) {
+        display: inline;
+      }
+    }
+  }
+}
+
+.main__playlists h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--main-border-color);
+}
+
+// Main content - music list wrapper ////////////////////
+.music__list {
+  display: grid;
+  grid-template-columns: minmax(200px, auto);
+  grid-gap: 20px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  @media (min-width: 800px) {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+  
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+  }
+  
+  @media (min-width: 1600px) {
+    grid-template-columns: repeat(4, minmax(250px, 1fr));
+  }
+}
+
+// Main content - music items ///////////////////////
+.music__list-item {
+  padding: 10px;
+  min-height: 250px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 1 !important;
+  }
+}
+
+// Activity pane /////////////////////////////
+.activity {
+  grid-area: social;
+  display: none;
+  background-color: var(--activity-bg-color);
+  padding-left: 20px;
+  h2 {
+    margin: 30px 0;
+  }
+  @media (min-width: 1200px) {
+    display: block;
+  }
+}
+
+// Footer ////////////////////////////////
+.footer {
+  position: fixed;
+  display: grid;
+  height: var(--footer-height);
+  grid-template-columns: 150px 1fr auto;
+  bottom: 0;
+  grid-gap: 20px;
+  background: var(--main-bg-color-dark);
+  padding: 20px 20px 100px;
+  width: 100%;
+  @media (min-width: 800px) {
+     grid-template-columns: 250px 1fr 60px;
+  }
+}
+
+.now-playing {
+  display: flex;
+}
+
+.album__image {
+   width: 100px;
+   height: 100px;
+}
+  
+.album__musician,
+.album__title {
+  display: block;
+}
+
+.album__info {
+  padding-left: 15px;
+}
+
+.album__title {
+  color: var(--main-highlight-color);
+  margin-bottom: 5px;
+}
+
+.album__musician {
+  font-size: 13px;
+}
+
+i {
+  color: var(--main-font-color);
+  padding: 0 10px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover {
+    color: var(--main-link-active-color);
+  }
+  
+  &.fa-play-circle {
+    font-size: 21px;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.play-controls {
+  align-self: center;
+  justify-self: center;
+}
+
+.play-device-controls {
+  align-self: center;
+}
+
+.song__title {
+  font-size: 18px;
+  color: var(--main-highlight-color);
+  margin-bottom: 8px;
+}
+
+.song__creator {
+  font-size: 12px;
+}
