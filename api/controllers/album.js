@@ -95,10 +95,11 @@ async function getAlbums(req, res) {
     try {
         var artistId = req.params.artist;
         if (!artistId) {
-            const albumesObtenidos = await albumes.find({}).sort('title');
+            const albumesObtenidos = await albumes.find({}).populate({ path: 'artist' });
             return res.send(albumesObtenidos && albumesObtenidos.length ? albumesObtenidos : []);
         } else {
             const albumesObtenidos = await albumes.find({ artist: artistId }).populate({ path: 'artist' });
+            console.log(albumesObtenidos);
             return res.send(albumesObtenidos && albumesObtenidos.length ? albumesObtenidos : []);
         }
     } catch (error) {
