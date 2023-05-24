@@ -21,6 +21,7 @@ import { Observable } from 'rxjs';
     public url: String = 'http://localhost:3977/api/';
     public next_page: any;
     public prev_page: any;
+    public confirmado: string;
 
     constructor(
         private _route: ActivatedRoute,
@@ -32,6 +33,7 @@ import { Observable } from 'rxjs';
             this.token = this._userService.getToken();
             this.next_page = 1;
             this.prev_page = 1;
+            this.confirmado = "";
     }
 
     ngOnInit(){
@@ -61,5 +63,18 @@ import { Observable } from 'rxjs';
           }
         })
       })
+    }
+    
+    onDeleteConfirm(id: string){
+      this.confirmado = id;
+    }
+    onCancelArtist(id: string){
+      this.confirmado = "";
+    }
+
+
+    onDeleteArtist(id: string){
+      alert("BU");
+      this._artistService.deleteArtist(this.token, id).subscribe();
     }
   }

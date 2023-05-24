@@ -14,7 +14,14 @@
         <div class="image-artist">
             <img src="{{url + 'get-image-artist/' + artist.image}}" alt="">
         </div>
-            <a [routerLink]="['/edit-artist', artist._id]">{{artist.name}}</a>
+            <a [routerLink]="['/edit-artist', artist._id]">Editar: {{artist.name}}</a><br>
+            <a [routerLink]="['/artist', artist._id]">Detalles: {{artist.name}}</a><br>
+            <a class="btn btn-default" (click)="onDeleteConfirm(artist._id)">Borrar</a><br>
+
+            <div class="seguro" *ngIf="confirmado == artist._id">
+                <a class="btn btn-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
+                <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
+            </div>
         </li>
     </ul>
 </div>
