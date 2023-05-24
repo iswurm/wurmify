@@ -90,6 +90,7 @@ async function uploadImage(req, res) {
       try {
         const user = await usuarios.findByIdAndUpdate(userId, { image: fileName });
         return res.send({
+          image: fileName,
           user: user
         });
       } catch (error) {

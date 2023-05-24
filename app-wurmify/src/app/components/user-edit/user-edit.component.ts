@@ -26,6 +26,7 @@ export class UserEditComponent {
   ngOnInit(){
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
+    console.log(this.identity.image);
   }
 
   onSubmit(){
@@ -36,7 +37,8 @@ export class UserEditComponent {
         this.makeFileRequest(this.url+'upload-image-user/'+this.user._id, [], this.filesToUpload).then(
           (result: any) =>{
             this.user.image = result.image;
-            console.log(this.user.image);
+            console.log(this.user);
+            console.log("IMAGEN: " + result.image);
             localStorage.setItem('identity', JSON.stringify(this.user));
           }
         );

@@ -1,21 +1,22 @@
-<div *ngIf="identity || token" class="navigation col-lg-12">
-    <h1>
-        {{title}}
-        
-    </h1>
-    <nav id="navigation">
-    </nav>
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div *ngIf="identity || token" class="navigation col-lg-11">
+        <h1 class="head-title">
+            <a [routerLink]="['/']">{{title}}</a>
+        </h1>
 
-    <nav id="userLogged">
-        <span id="identity_name">{{identity.name}}</span>
-        <span class="btn btn-warning" (click) = "logout()">Log out</span>
-        <a [routerLink]="['/mis-datos']">Mis Datos <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a>
-        <router-outlet></router-outlet>
-    </nav>
+        <nav id="userLogged">
+            <span id="identity_name">{{identity.name}}</span><br>
+            <img src="{{url+ 'get-image-user/' + identity.image}}"/><br>
+            <span class="btn btn-warning" (click) = "logout()">Log out</span><br>
+            <div class="enlaces-menu">
+                <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">Mis Datos <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a><br>
+                <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">Artistas <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a>
+            </div>
+            <router-outlet></router-outlet>
+        </nav>
+    </div>
 </div>
-
-<div class="clearfix"></div>
-
 <div class="row" *ngIf="!token">
     <div class="col-lg-6">
         <h1>Log In</h1>
@@ -70,4 +71,3 @@
     </div>
 </div>
 
-<router-outlet></router-outlet>
