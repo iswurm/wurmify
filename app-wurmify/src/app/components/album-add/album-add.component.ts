@@ -29,7 +29,7 @@ export class AlbumAddComponent {
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.artist = new Artist('', '', '', '');
-        this.album = new Album('', '', 0, '', '');
+        this.album = new Album('', '', '', 0, '', '');
 }
 
   ngOnInit(){

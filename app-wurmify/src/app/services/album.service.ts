@@ -33,12 +33,42 @@ export class AlbumService {
     return this.http.post(this.apiRestUrl+'album', params, headers);
   }
 
-  deleteArtist(token: any, id: string){
+  getAlbum(token: any, id: string){
     let headers = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.delete(this.apiRestUrl+'artist/'+id, headers);
+    return this.http.get(this.apiRestUrl+'album/'+id, headers);
   }
 
+  getAlbums(token: any, artistId: string){
+    let headers = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
+      'authorization': token })
+    }
+    if(artistId == null){
+      return this.http.get(this.apiRestUrl+'albums/', headers);
+    }else{
+      return this.http.get(this.apiRestUrl+'albums/'+artistId, headers);
+    }
+    
+  }
+
+
+  deleteAlbum(token: any, id: string){
+    let headers = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
+      'authorization': token })
+    }
+    return this.http.delete(this.apiRestUrl+'album/'+id, headers);
+  }
+
+  editAlbum(token: any, id: string, album: Album){
+    let params = JSON.stringify(album);
+    let headers = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
+      'authorization': token })
+    }
+    return this.http.put(this.apiRestUrl+'update-album/'+id, params, headers);
+  }
 }

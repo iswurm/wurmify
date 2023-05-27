@@ -12,6 +12,8 @@ import { ArtistAddComponent } from './components/artist-add/artist-add.component
 import { ArtistEditComponent } from './components/artist-edit/artist-edit.component';
 import { ArtistDetailComponent } from './components/artist-detail/artist-detail.component';
 import { AlbumAddComponent } from './components/album-add/album-add.component';
+import { AlbumEditComponent } from './components/album-edit/album-edit.component';
+import { AlbumDetailComponent } from './components/album-detail/album-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { AlbumAddComponent } from './components/album-add/album-add.component';
     ArtistAddComponent,
     ArtistEditComponent,
     ArtistDetailComponent,
-    AlbumAddComponent
+    AlbumAddComponent,
+    AlbumEditComponent,
+    AlbumDetailComponent
   ],
   imports: [
     BrowserModule,

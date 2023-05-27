@@ -1,0 +1,24 @@
+<div *ngIf="artist" class="artist-box">
+    <div class="artist-head-card">
+        <div *ngIf="artist.image" class="image-artist">
+            <img src="{{url + 'get-image-artist/' + artist.image}}" alt="">
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="album" *ngIf="album">
+        <p>Album</p>
+        <div class="pic">
+            <img src="{{url + 'get-image-album/' + album.image}}" alt="">
+        </div>
+        
+        <h2>{{album.title}}</h2>
+        <h3>{{album.description}}</h3>
+        <h3>{{album.year}}</h3>
+
+        <div *ngIf="identity.role == 'ROLE_ADMIN'">
+            <a [routerLink]="['/add-album', artist._id]"
+                class="btn btn-default">Añadir canción</a>
+        </div>
+    </div>
+</div>

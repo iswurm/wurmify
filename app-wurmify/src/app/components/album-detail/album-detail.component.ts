@@ -7,12 +7,13 @@ import { AlbumService } from 'src/app/services/album.service';
 import { Artist } from 'src/app/models/artist';
 import { Album } from 'src/app/models/album';
 @Component({
-  selector: 'app-artist-detail',
-  templateUrl: './artist-detail.component.html',
-  styleUrls: ['./artist-detail.component.scss']
+  selector: 'app-album-detail',
+  templateUrl: './album-detail.component.html',
+  styleUrls: ['./album-detail.component.scss']
 })
-export class ArtistDetailComponent {
+export class AlbumDetailComponent {
   public artist: Artist;
+  public album: Album;
   public identity: any;
   public token: any;
   public albums: Album[];
@@ -27,25 +28,20 @@ export class ArtistDetailComponent {
           this.identity = this._userService.getIdentity();
           this.token = this._userService.getToken();
           this.artist = new Artist('', '', '', '');
+          this.album = new Album('', '', '', 0, '', '');
           this.albums = [];
           this.confirmado = "";
   }
 
   ngOnInit(){
-    this.getArtist();
+    this.getAlbum();
   }
 
-  getArtist(){
+  getAlbum(){
     this._route.params.forEach((params: Params) => {
       let id = params['id'];
-      this._artistService.getArtist(this.token, id).subscribe((data: any)=>{
-        this.artist = data.artist;
-        this._albumService.getAlbums(this.token, this.artist._id).subscribe((data: any)=>{
-          this.albums = data;
-          this.albums.forEach((x: any) =>{
-            console.log(x.artist.name);
-          })
-        });
+      this._albumService.getAlbum(this.token, id).subscribe((data: any)=>{
+        this.album = data;
       })
     })
   }
@@ -56,7 +52,6 @@ export class ArtistDetailComponent {
   onCancelAlbum(id: string){
     this.confirmado = "";
   }
-
 
   onDeleteAlbum(id: string){
     alert("BU");

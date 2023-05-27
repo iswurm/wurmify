@@ -68,28 +68,18 @@ async function findAll(req, res) {
 }
 
 async function getAlbum(req, res) {
+    var albumId = req.params.id;
     try {
-        const album = await albumes.findByOne({ '_id': req.params.id }).populate({ path: 'artist' });
+        const album = await albumes.findOne({ '_id': albumId }).populate({ path: 'artist' });
         return res.send(album ? album : {});
-        /*
-        await albumes.findById(albumId).populate({path: 'artist'}).exec((err, album)=>{
-            if(err){
-                return res.status(404).send("Error");    
-            }else{
-                if(!album){
-                    return res.status(404).send("El album no existe");    
-                }else{
-                    return res.status(200).send({ album });
-                }
-            }
-        });*/
-
     } catch (error) {
         return res.status(400).send({
             status: 'failure en getAlbum'
         });
     }
 }
+
+
 
 async function getAlbums(req, res) {
     try {
@@ -131,7 +121,6 @@ async function deleteAlbum(req, res) {
         const albumBorrado = await albumes.findOneAndRemove({ albumId });
         const cancionesBorradas = await canciones.findOneAndDelete({ album: albumId });
         return res.status(200).send("BORRADO CON EXITO!");
-        //return res.status(200).send("Borrado de album con éxito");    
     } catch (error) {
         return res.status(400).send({
             status: 'failure en removeAlbum'
@@ -174,7 +163,7 @@ async function uploadImage(req, res) {
 
 async function getImageFile(req, res) {
     var imageFile = req.params.imageFile;
-    var pathFile = './uploads/albumes/' + imageFile;
+    var pathFile = './uploads/albums/' + imageFile;
     let exists = fs.existsSync(pathFile);
     console.log(exists);
     if (exists) {
@@ -184,10 +173,10 @@ async function getImageFile(req, res) {
     }
 }
 
-async function deleteAlbum(req, res){
+async function deleteAlbum(req, res) {
     var albumId = req.params.id;
-    try{
-        await albumes.findOneAndRemove({album: albumId});
+    try {
+        await albumes.findOneAndRemove({_id: albumId});
         await canciones.findOneAndRemove({album: albumId});
         //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
         //return res.status(200).send("Borrado de album con éxito");    
@@ -197,5 +186,6 @@ async function deleteAlbum(req, res){
         });
     }
 }
+
 
 module.exports = { saveAlbum, findAll, getAlbum, updateAlbum, deleteAlbum, getAlbums, uploadImage, getImageFile, deleteAlbum };
