@@ -9,6 +9,8 @@ import { ArtistDetailComponent } from './components/artist-detail/artist-detail.
 import { AlbumAddComponent } from './components/album-add/album-add.component';
 import { AlbumEditComponent } from './components/album-edit/album-edit.component';
 import { AlbumDetailComponent } from './components/album-detail/album-detail.component';
+import { SongAddComponent } from './components/song-add/song-add.component';
+import { SongEditComponent } from './components/song-edit/song-edit.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path: 'edit-artist/:id', component: ArtistEditComponent},
   {path: 'add-album/:artist', component: AlbumAddComponent},
   {path: 'edit-album/:id', component: AlbumEditComponent},
-  {path: 'album/:id', component: AlbumDetailComponent}
+  {path: 'album/:id', component: AlbumDetailComponent},
+  {path: 'add-song/:album', component: SongAddComponent},
+  {path: 'edit-song/:id', component: SongEditComponent}
 ];
 
 @NgModule({

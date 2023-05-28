@@ -1,0 +1,29 @@
+<h1>{{titulo}}</h1>
+<h1>{{artist.name}}</h1>
+
+<div class="formSong">
+    <form #formSong="ngForm" (submit)="onSubmit()" class="col-md-10">
+        <p>
+            <label for="">Number:</label>
+            <input type="number" #number="ngModel" name="number" [(ngModel)]="song.number" class="form-control" required>
+            <span *ngIf="!name.valid && name.touched">
+                El number es obligatorio
+            </span>
+        </p>
+        <p>
+            <label for="">Name:</label>
+            <input type="text" #name="ngModel" name="name" [(ngModel)]="song.name" class="form-control" required>
+            <span *ngIf="!name.valid && name.touched">
+                El title es obligatorio
+            </span>
+        </p>
+        <p>
+            <label for="">Duration:</label>
+            <input type="text" #duration="ngModel" name="duration" [(ngModel)]="song.duration" class="form-control" required>
+            <span *ngIf="!duration.valid && duration.touched">
+                La duración es obligatoria
+            </span>
+        </p>
+        <input type="submit" value="Create Album" class="btn btn-primary" [disabled]="!formSong.form.valid">
+    </form>
+</div>

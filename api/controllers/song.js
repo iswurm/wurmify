@@ -48,12 +48,12 @@ async function findAll(req, res) {
     var albumId = req.params.album;
 
     try {
-        if(!albumId){
+        if (!albumId) {
             const canciones = await songs.find({});
             console.log(canciones);
             return res.send(canciones && canciones.length ? canciones : []);
-        }else{
-            const canciones = await songs.find({album: albumId}).sort('number');
+        } else {
+            const canciones = await songs.find({ album: albumId }).sort('number');
             return res.send(canciones && canciones.length ? canciones : []);
         }
 
@@ -63,14 +63,14 @@ async function findAll(req, res) {
                 path: 'artist',
                 model: 'Artist'
             }
-        }).exec(function(err, songs){
-            if(err){
-                res.status(500).send({message: "Error en la petición"});
-            }else{
-                if(!songs){
-                    res.status(404).send({message: "No existen las canciones"});
-                }else{
-                    res.status(200).send({songs});
+        }).exec(function (err, songs) {
+            if (err) {
+                res.status(500).send({ message: "Error en la petición" });
+            } else {
+                if (!songs) {
+                    res.status(404).send({ message: "No existen las canciones" });
+                } else {
+                    res.status(200).send({ songs });
                 }
             }
         })
@@ -81,95 +81,88 @@ async function findAll(req, res) {
     }
 }
 
-async function getSong(req, res){
+async function getSong(req, res) {
     var songId = req.params.id;
-    try{
-        await songs.findById({songId}).populate({path: 'album'}).exec((err, song)=>{
-            if(err){
-                return res.status(500).send("Error");    
-            }else{
-                if(!song){
-                    return res.status(404).send("La canción no existe");    
-                }else{
-                    return res.status(200).send({ song });
-                }
-            }
-        });
-        
-    }catch(error){
+    try {
+        const song = await songs.findOne({ '_id': songId }).populate({ path: 'album' });
+        return res.send(song ? song : {});
+    }
+    catch (error) {
         return res.status(400).send({
             status: 'failure en getAlbum'
         });
     }
 }
 
-async function updateSong(req, res){
+
+async function updateSong(req, res) {
     var songId = req.params.id;
     var update = req.body;
-  
     try {
         //Song.findByIdAndUpdate(songId, update, (err, songUpdated) => {...}); SEGUIR PROBANDO CON ESTO
-        await songs.findByIdAndUpdate(songId, update);
+        const song = await songs.findByIdAndUpdate(songId, update);
+        return res.send({
+            song: song
+          });
     } catch (error) {
-      return res.status(400).send({
-        status: 'No se ha podido modificar'
-      });
+        return res.status(400).send({
+            status: 'No se ha podido modificar'
+        });
     }
 }
 
-async function deleteSong(req, res){
+async function deleteSong(req, res) {
     var songId = req.params.id;
-    try{
-        await songs.findOneAndRemove({songId});
-        //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
-        //return res.status(200).send("Borrado de album con éxito");    
-    }catch(error){
+    try {
+        const song = await songs.findOneAndRemove({ "_id" : songId });
+        return res.send({
+            song: song
+        })
+    } catch (error) {
         return res.status(400).send({
             status: 'failure en removeAlbum'
         });
     }
 }
 
-async function getSongFile(req, res){
+async function getSongFile(req, res) {
     var songFile = req.params.songFile;
-    var pathFile = './uploads/songs/'+songFile;
+    var pathFile = './uploads/songs/' + songFile;
     let exists = fs.existsSync(pathFile);
     if (exists) {
         res.sendFile(path.resolve(pathFile));
-      } else {
+    } else {
         res.status(200).send({ message: 'No tiene imagen' });
-      }
+    }
 }
 
-async function uploadFile(req, res){
+async function uploadFile(req, res) {
     var songId = req.params.id;
     var fileName = 'No subido';
-  
     if (req.files) {
-      var filePath = req.files.song.path;
-      var fileSplit = filePath.split('\\');
-      var fileName = fileSplit[2];
-      var extSplit = fileName.split('\.');
-      var fileExtension = extSplit[1];
-      console.log(filePath);
-      if (fileExtension == 'mp3' || fileExtension == 'ogg') {
-        try {
-          const song = await songs.findByIdAndUpdate(songId, { file: fileName });
-          return res.send({
-            file: fileName,
-            song: song
-          });
-        } catch (error) {
-          return res.status(400).send({
-            status: 'No se ha podido modificar la canción'
-          });
+        var filePath = req.files.song.path;
+        var fileSplit = filePath.split('\\');
+        var fileName = fileSplit[2];
+        var extSplit = fileName.split('\.');
+        var fileExtension = extSplit[1];
+        console.log(filePath);
+        if (fileExtension == 'mp3' || fileExtension == 'ogg') {
+            try {
+                const song = await songs.findByIdAndUpdate(songId, { file: fileName });
+                return res.send({
+                    file: fileName
+                });
+            } catch (error) {
+                return res.status(400).send({
+                    status: 'No se ha podido modificar la canción'
+                });
+            }
+        } else {
+            res.status(200).send({ message: 'Extensión inválida' });
         }
-      } else {
-        res.status(200).send({ message: 'Extensión inválida' });
-      }
-  
+
     } else {
-      res.status(200).send({ message: 'No ha subido imagen' });
+        res.status(200).send({ message: 'No ha subido imagen' });
     }
 }
 

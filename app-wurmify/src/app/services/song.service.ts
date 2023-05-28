@@ -5,12 +5,12 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Artist } from '../models/artist';
 import { Album } from '../models/album';
+import { Song } from '../models/song';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AlbumService {
-
+export class SongService {
 
   private apiRestUrl = 'http://localhost:3977/api/';
   private httpOptions = {
@@ -23,51 +23,51 @@ export class AlbumService {
   constructor(private http: HttpClient) { 
   }
 
-
-  addAlbum(token: any, album: Album){
-    let params = JSON.stringify(album);
+  
+  addSong(token: any, song: Song){
+    let params = JSON.stringify(song);
     let headers = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.post(this.apiRestUrl+'album', params, headers);
+    return this.http.post(this.apiRestUrl+'song', params, headers);
   }
 
-  getAlbum(token: any, id: string){
+  getSong(token: any, id: string){
     let headers = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.get(this.apiRestUrl+'album/'+id, headers);
+    return this.http.get(this.apiRestUrl+'song/'+id, headers);
   }
 
-  getAlbums(token: any, artistId: string){
+  getSongs(token: any, albumId: string){
     let headers = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    if(artistId == null){
-      return this.http.get(this.apiRestUrl+'albums/', headers);
+    if(albumId == null){
+      return this.http.get(this.apiRestUrl+'songs/', headers);
     }else{
-      return this.http.get(this.apiRestUrl+'albums/'+artistId, headers);
+      return this.http.get(this.apiRestUrl+'songs/'+albumId, headers);
     }
   }
 
 
-  deleteAlbum(token: any, id: string){
+  deleteSong(token: any, id: string){
     let headers = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.delete(this.apiRestUrl+'album/'+id, headers);
+    return this.http.delete(this.apiRestUrl+'song/'+id, headers);
   }
 
-  editAlbum(token: any, id: string, album: Album){
-    let params = JSON.stringify(album);
+  editSong(token: any, id: string, song: Song){
+    let params = JSON.stringify(song);
     let headers = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.put(this.apiRestUrl+'update-album/'+id, params, headers);
+    return this.http.put(this.apiRestUrl+'update-song/'+id, params, headers);
   }
 }
