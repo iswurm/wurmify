@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { ArtistService } from 'src/app/services/artist.service';
@@ -26,28 +26,28 @@ export class AlbumDetailComponent {
   public confirmado: string;
 
   constructor(
-      private _route: ActivatedRoute,
-      private _router: Router,
-      private _userService: UserServiceService, private _artistService: ArtistService, private _albumService: AlbumService, private _songService: SongService){
-          this.identity = this._userService.getIdentity();
-          this.token = this._userService.getToken();
-          this.artist = new Artist('', '', '', '');
-          this.album = new Album('', '', '', 0, '', '');
-          this.albums = [];
-          this.songs = [];
-          this.confirmado = "";
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _userService: UserServiceService, private _artistService: ArtistService, private _albumService: AlbumService, private _songService: SongService) {
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
+    this.artist = new Artist('', '', '', '');
+    this.album = new Album('', '', '', 0, '', '');
+    this.albums = [];
+    this.songs = [];
+    this.confirmado = "";
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getAlbum();
   }
 
-  getAlbum(){
+  getAlbum() {
     this._route.params.forEach((params: Params) => {
       let id = params['id'];
-      this._albumService.getAlbum(this.token, id).subscribe((data: any)=>{
+      this._albumService.getAlbum(this.token, id).subscribe((data: any) => {
         this.album = data;
-        this._songService.getSongs(this.token, this.album._id).subscribe((data: any)=>{
+        this._songService.getSongs(this.token, this.album._id).subscribe((data: any) => {
           this.songs = data;
           console.log(this.songs);
         })
@@ -55,24 +55,36 @@ export class AlbumDetailComponent {
     })
   }
 
-  onDeleteConfirm(id: string){
+  onDeleteConfirm(id: string) {
     this.confirmado = id;
   }
-  onCancelAlbum(id: string){
+  onCancelAlbum(id: string) {
     this.confirmado = "";
   }
 
-  onDeleteAlbum(id: string){
+  onDeleteAlbum(id: string) {
     alert("BU");
     this._albumService.deleteAlbum(this.token, id).subscribe();
   }
 
-  onCancelSong(id: string){
+  onCancelSong(id: string) {
     this.confirmado = "";
   }
 
-  onDeleteSong(id: string){
+  onDeleteSong(id: string) {
     alert("BU");
     this._songService.deleteSong(this.token, id).subscribe();
+  }
+
+  startPlayer(song: Song) {
+    let songPlayer = JSON.stringify(song);
+    let filePath = this.url + 'get-song-file/' + song.file;
+    let imagePath = this.url + 'get-image-album/' + this.album.image;
+    console.log(filePath);
+    localStorage.setItem("sound", songPlayer);
+    document.getElementById('mp3Source')?.setAttribute("src", filePath);
+    (document.getElementById('player') as any).load();
+    (document.getElementById('player') as any).play();
+
   }
 }

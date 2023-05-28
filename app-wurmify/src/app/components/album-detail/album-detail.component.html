@@ -21,6 +21,9 @@
                 <li>
                     {{song.number}}: 
                     {{song.name}}
+                    <a (click)="startPlayer(song)" class="btn btn-success">
+                        <span>PLAY</span>
+                    </a>
                     <a [routerLink]="['/edit-song', song._id]">Editar</a>
                     <a class="btn btn-default" (click)="onDeleteConfirm(song._id)">Borrar</a><br>
                     <div class="seguro" *ngIf="confirmado == song._id">
