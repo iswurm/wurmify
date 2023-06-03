@@ -10,7 +10,12 @@ var Song = require('../models/song');
 const mongoose = require('mongoose');
 const artistas = mongoose.model('Artist');
 const albumes = mongoose.model('Album');
-const canciones = mongoose.model('Song');
+const canciones = mongoose.model('Song');const AWS = require('aws-sdk');
+AWS.config.update({
+    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
+    secretAccessKey: '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'
+  });
+const s3 = new AWS.S3();
 
 
 async function saveAlbum(req, res) {
@@ -142,7 +147,20 @@ async function uploadImage(req, res) {
         if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'gif') {
             try {
                 const album = await albumes.findByIdAndUpdate(albumId, { image: fileName });
-                console.log(filePath);
+                const fileContent = fs.readFileSync(filePath);
+                const params = {
+                  Bucket: 'wurmify',
+                  Key: fileName,
+                  Body: fileContent
+                }
+                s3.upload(params, (err, data) => {
+                  if (err) {
+                    console.log("fail");
+                  }else{
+                    console.log(data);
+                  }
+                  
+                })
                 return res.send({
                     image: fileName,
                     album: album

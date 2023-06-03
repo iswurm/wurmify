@@ -12,6 +12,13 @@ const artistas = mongoose.model('Artist');
 const albumes = mongoose.model('Album');
 const songs = mongoose.model('Song');
 
+const AWS = require('aws-sdk');
+AWS.config.update({
+    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
+    secretAccessKey: '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'
+  });
+const s3 = new AWS.S3();
+
 async function pruebas(req, res) {
     res.status(200).send({ message: "Controlador OK" });
 }
@@ -50,7 +57,6 @@ async function findAll(req, res) {
     try {
         if (!albumId) {
             const canciones = await songs.find({});
-            console.log(canciones);
             return res.send(canciones && canciones.length ? canciones : []);
         } else {
             const canciones = await songs.find({ album: albumId }).sort('number');
@@ -145,10 +151,24 @@ async function uploadFile(req, res) {
         var fileName = fileSplit[2];
         var extSplit = fileName.split('\.');
         var fileExtension = extSplit[1];
-        console.log(filePath);
+
         if (fileExtension == 'mp3' || fileExtension == 'ogg') {
             try {
                 const song = await songs.findByIdAndUpdate(songId, { file: fileName });
+                const fileContent = fs.readFileSync(filePath);
+                const params = {
+                  Bucket: 'wurmify',
+                  Key: fileName,
+                  Body: fileContent
+                }
+                s3.upload(params, (err, data) => {
+                  if (err) {
+                    console.log("fail");
+                  }else{
+                    console.log(data);
+                  }
+                  
+                })
                 return res.send({
                     file: fileName
                 });
@@ -165,5 +185,6 @@ async function uploadFile(req, res) {
         res.status(200).send({ message: 'No ha subido imagen' });
     }
 }
+
 
 module.exports = { pruebas, saveSong, findAll, getSong, updateSong, deleteSong, uploadFile, getSongFile };

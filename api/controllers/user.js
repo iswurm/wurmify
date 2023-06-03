@@ -7,6 +7,13 @@ var jwt = require('../services/jwt');
 var fs = require('fs');
 var path = require('path');
 
+const AWS = require('aws-sdk');
+AWS.config.update({
+    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
+    secretAccessKey: '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'
+  });
+const s3 = new AWS.S3();
+
 async function pruebas(req, res) {
   res.status(200).send({ message: "Controlador OK" });
 }
@@ -89,6 +96,20 @@ async function uploadImage(req, res) {
     if (fileExtension == 'png' || fileExtension == 'jpg' || fileExtension == 'gif') {
       try {
         const user = await usuarios.findByIdAndUpdate(userId, { image: fileName });
+        const fileContent = fs.readFileSync(filePath);
+                const params = {
+                  Bucket: 'wurmify',
+                  Key: fileName,
+                  Body: fileContent
+                }
+                s3.upload(params, (err, data) => {
+                  if (err) {
+                    console.log("fail");
+                  }else{
+                    console.log(data);
+                  }
+                  
+                })
         return res.send({
           image: fileName,
           user: user

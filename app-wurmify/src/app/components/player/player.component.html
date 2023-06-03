@@ -1,6 +1,6 @@
 <div class="albumImage">
     <span *ngIf="song.album">
-        <img src="{{url + 'get-image-album/' + album.image}}" alt="Imagen del álbum">
+        <img src="{{urlAWS + album.image}}" alt="Imagen del álbum">
     </span>
 </div>
 
@@ -9,7 +9,7 @@
     <span class="songTitle">{{song.name}}</span>
     <div class="song">
         <audio controls id="player">
-            <source src="{{url + 'get-song-file/' + song.file}}" id="mp3Source" type="audio/mpeg">
+            <source src="{{urlAWS + song.file}}" id="mp3Source" type="audio/mpeg">
         </audio>
     </div>
 </div>

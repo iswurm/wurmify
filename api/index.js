@@ -12,9 +12,12 @@ const options = {
     family: 4 // Use IPv4, skip trying IPv6
   };
 
+const uri = "mongodb+srv://ignaciosanchez9:M1k4tus12023@clusterwurmify.xyd8h0c.mongodb.net/?retryWrites=true&w=majority";
+
+
 let connectWithRetry= function() {
     mongoose.Promise = global.Promise;
-    return mongoose.connect('mongodb://localhost:27017/wurmify', options).then(() => { 
+    return mongoose.connect(uri, options).then(() => { 
         app.listen(port, function(){
           console.log("Está funcionando");
         })

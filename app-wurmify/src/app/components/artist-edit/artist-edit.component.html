@@ -23,7 +23,7 @@
             <div>
                 <label for="">Artist pic: </label>
                 <div class="imageEdit">
-                    <img src="{{url + 'get-image-artist/' + artist.image}}" alt="">
+                    <img src="{{urlAWS + artist.image}}" alt="">
                 </div>
                 <input type="file" name="image" placeholder="Upload an artist picture" (change)="fileChangeEvent($event)">
             </div>

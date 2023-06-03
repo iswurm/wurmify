@@ -20,6 +20,7 @@ export class AlbumAddComponent {
   public token: any;
   public filesToUpload: Array<File> = [];
   public url: String = 'http://localhost:3977/api/';
+  public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
 
   constructor(
     private _route: ActivatedRoute,

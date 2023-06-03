@@ -17,6 +17,8 @@ export class AppComponent{
   public identity: any;
   public token: any;
   public url: String = 'http://localhost:3977/api/';
+  public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
+  
 
   constructor(private _userService:UserServiceService, private _route: ActivatedRoute, private _router: Router){
     this.user = new User('', '', '', '', '', 'ROLE_USER', '');

@@ -23,6 +23,7 @@ export class AlbumDetailComponent {
   public songs: Song[];
   public filesToUpload: Array<File> = [];
   public url: String = 'http://localhost:3977/api/';
+  public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/'; 
   public confirmado: string;
 
   constructor(
@@ -78,7 +79,7 @@ export class AlbumDetailComponent {
 
   startPlayer(song: Song) {
     let songPlayer = JSON.stringify(song);
-    let filePath = this.url + 'get-song-file/' + song.file;
+    let filePath = this.urlAWS + song.file;
     let imagePath = this.url + 'get-image-album/' + this.album.image;
     console.log(filePath);
     localStorage.setItem("sound", songPlayer);

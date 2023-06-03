@@ -1,7 +1,7 @@
 <div *ngIf="artist" class="artist-box">
     <div class="artist-head-card">
         <div *ngIf="artist.image" class="image-artist">
-            <img src="{{url + 'get-image-artist/' + artist.image}}" alt="">
+            <img src="{{urlAWS + artist.image}}" alt="">
         </div>
         <div class="data">
             <h1>{{artist.name}}</h1>
@@ -18,7 +18,7 @@
                 <p>{{album.title}}</p>
                 <a class="btn btn-danger" [routerLink]="['/album', album._id]">DETALLES </a>
                 <div class="pic">
-                    <img src="{{url + 'get-image-album/' + album.image}}" alt="">
+                    <img src="{{urlAWS + album.image}}" alt="">
                 </div>
                 <div *ngIf="identity.role == 'ROLE_ADMIN'" class="edicion">
                     <p>
