@@ -7,7 +7,7 @@
 
         <nav id="userLogged">
             <span id="identity_name">{{identity.name}}</span><br>
-            <img src="{{url+ 'get-image-user/' + identity.image}}"/><br>
+            <img src="{{urlAWS + identity.image}}"/><br>
             <span class="btn btn-warning" (click) = "logout()">Log out</span><br>
             <div class="enlaces-menu">
                 <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">Mis Datos <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a><br>

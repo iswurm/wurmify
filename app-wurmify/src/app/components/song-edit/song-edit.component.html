@@ -28,7 +28,7 @@
             <label for="">Song file: </label>
             <div class="song" *ngIf="song.file">
                 <audio controls>
-                    <source src="{{url + 'get-song-file/' + song.file}}">
+                    <source src="{{urlAWS + song.file}}">
                 </audio>
             </div>
             <input type="file" name="image" placeholder="Upload an artist picture" (change)="fileChangeEvent($event)">

@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
     public identity: any;
     public token: any;
     public url: String = 'http://localhost:3977/api/';
+    public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
     public next_page: any;
     public prev_page: any;
     public confirmado: string;

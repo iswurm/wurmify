@@ -9,7 +9,7 @@
     <div class="album" *ngIf="album">
         <p>Album</p>
         <div class="pic">
-            <img src="{{url + 'get-image-album/' + album.image}}" alt="">
+            <img src="{{urlAWS + album.image}}" alt="">
         </div>
         
         <h2>{{album.title}}</h2>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="song" *ngIf="song.file">
                         <audio controls>
-                            <source src="{{url + 'get-song-file/' + song.file}}">
+                            <source src="{{urlAWS + song.file}}">
                         </audio>
                     </div>
                     
