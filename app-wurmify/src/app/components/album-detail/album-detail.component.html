@@ -22,7 +22,7 @@
                     {{song.number}}: 
                     {{song.name}}
                     <a (click)="startPlayer(song)" class="btn btn-success">
-                        <span>PLAY</span>
+                        <i class="bi bi-play-fill" id="masterPlay"></i>
                     </a>
                     <a [routerLink]="['/edit-song', song._id]">Editar</a>
                     <a class="btn btn-default" (click)="onDeleteConfirm(song._id)">Borrar</a><br>
@@ -30,12 +30,13 @@
                         <a class="btn btn-danger" (click)="onDeleteSong(song._id)">ELIMINAR </a>
                         <a class="btn btn-default" (click)="onCancelSong(song._id)">Cancelar</a><br>
                     </div>
+                    <!--  
                     <div class="song" *ngIf="song.file">
                         <audio controls>
                             <source src="{{urlAWS + song.file}}">
                         </audio>
                     </div>
-                    
+                    -->
                 </li>
             </ul>
         </div>
