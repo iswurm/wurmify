@@ -1,36 +1,41 @@
 <h1>{{titulo}}</h1>
 <h1>{{artist.name}}</h1>
 
-<div class="formAlbum">
-    <form #formAlbum="ngForm" (submit)="onSubmit()" class="col-md-10">
-        <p>
-            <label for="">Title:</label>
-            <input type="text" #title="ngModel" name="title" [(ngModel)]="album.title" class="form-control" required>
-            <span *ngIf="!title.valid && title.touched">
-                El title es obligatorio
-            </span>
-        </p>
-        <p>
-            <label for="">Description:</label>
-            <input type="text" #description="ngModel" name="description" [(ngModel)]="album.description" class="form-control" required>
-            <span *ngIf="!description.valid && description.touched">
-                La descripción es obligatoria
-            </span>
-        </p>
-        <p>
-            <label for="">Year:</label>
-            <input type="number" #year="ngModel" name="year" [(ngModel)]="album.year" class="form-control" required>
-            <span *ngIf="!year.valid && year.touched">
-                El year es obligatorio
-            </span>
-        </p>
-        <div>
-            <label for="">Album pic: </label>
-            <div class="imageEdit">
-                <img src="{{urlAWS + album.image}}" alt="">
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-8"></div>
+    <div class="formAlbum">
+        <form #formAlbum="ngForm" (submit)="onSubmit()" class="col-md-10">
+            <p>
+                <label for="">Title:</label>
+                <input type="text" #title="ngModel" name="title" [(ngModel)]="album.title" class="form-control" required>
+                <span id="aviso-formulario" *ngIf="!title.valid && title.touched">
+                    El título del álbum es obligatorio.
+                </span>
+            </p>
+            <p>
+                <label for="">Description:</label>
+                <input type="text" #description="ngModel" name="description" [(ngModel)]="album.description" class="form-control" required>
+                <span id="aviso-formulario" *ngIf="!description.valid && description.touched">
+                    La descripción es obligatoria.
+                </span>
+            </p>
+            <p>
+                <label for="">Year:</label>
+                <input type="number" #year="ngModel" name="year" [(ngModel)]="album.year" class="form-control" required>
+                <span id="aviso-formulario" *ngIf="!year.valid && year.touched">
+                    El año es obligatorio.
+                </span>
+            </p>
+            <div>
+                <label for="">Album pic: </label>
+                <div class="imageEdit">
+                    <img src="{{urlAWS + album.image}}" alt="">
+                </div>
+                <input type="file" name="image" placeholder="Upload an album picture" (change)="fileChangeEvent($event)">
             </div>
-            <input type="file" name="image" placeholder="Upload an album picture" (change)="fileChangeEvent($event)">
-        </div>
-        <input type="submit" value="Create Album" class="btn btn-primary" [disabled]="!formAlbum.form.valid">
-    </form>
+            <input type="submit" value="Create Album" class="btn btn-primary" [disabled]="!formAlbum.form.valid">
+        </form>
+    </div>
+    <div class="col-lg-1"></div>
 </div>

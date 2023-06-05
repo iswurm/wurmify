@@ -8,7 +8,7 @@
         <nav id="userLogged" class="menu_side">
             <span id="identity_name">{{identity.name}}</span><br>
             <img src="{{urlAWS + identity.image}}" /><br>
-            <span class="btn btn-warning" (click)="logout()">Log out</span><br>
+            <span class="btn btn-warning" (click)="logout()"><i class="bi bi-box-arrow-left"></i></span><br>
             <div class="enlaces-menu">
                 <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">Mis Datos <span
                         class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a><br>
@@ -47,92 +47,95 @@
 </div>
 <div class="row">
     <div class="col-lg-4 col-md-1 col-sm-1"></div>
-    <div class="col-lg-4 col-md-8 col-sm-6">
-    <h1>Sign In</h1>
-    <form #registerForm="ngForm" (submit)="onSubmitRegister()" id="formSignIn">
-        <p>
-            <label for="">Name:</label>
-            <input type="text" #name="ngModel" name="name" [(ngModel)]="userRegister.name" class="form-control"
-                required>
-            <span *ngIf="!name.valid && name.touched">
-                El nombre es obligatorio
-            </span>
-        </p>
-        <p>
-            <label for="">Surname:</label>
-            <input type="text" #surname="ngModel" name="surname" [(ngModel)]="userRegister.surname" class="form-control"
-                required>
-            <span *ngIf="!surname.valid && surname.touched">
-                Los apellidos son obligatorios
-            </span>
-        </p>
-        <p>
-            <label for="">Email:</label>
-            <input type="text" #email="ngModel" name="email" [(ngModel)]="userRegister.email" class="form-control"
-                required>
-        </p>
-        <p>
-            <label for="">Password:</label>
-            <input type="password" #password="ngModel" name="password" [(ngModel)]="userRegister.password"
-                class="form-control" required>
-            <span *ngIf="!password.valid && password.touched">
-                La contraseña es obligatoria
-            </span>
-        </p>
-        <input type="submit" value="LogIn" class="btn btn-primary">
-    </form>
-</div>
-
-
-<div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-4 col-md-8 col-sm-10">
+        <h1>Sign In</h1>
+        <form #registerForm="ngForm" (submit)="onSubmitRegister()" id="formSignIn">
+            <p>
+                <label for="">Nombre:</label>
+                <input type="text" #name="ngModel" name="name" [(ngModel)]="userRegister.name" class="form-control"
+                    required>
+                <span *ngIf="!name.valid && name.touched">
+                    El nombre es obligatorio.
+                </span>
+            </p>
+            <p>
+                <label for="">Apellidos:</label>
+                <input type="text" #surname="ngModel" name="surname" [(ngModel)]="userRegister.surname"
+                    class="form-control" required>
+                <span *ngIf="!surname.valid && surname.touched">
+                    Los apellidos son obligatorios.
+                </span>
+            </p>
+            <p>
+                <label for="">Email:</label>
+                <input type="text" #email="ngModel" name="email" [(ngModel)]="userRegister.email" class="form-control"
+                    required>
+                <span *ngIf="!email.valid && email.touched">
+                    El email es obligatorio.
+                </span>
+            </p>
+            <p>
+                <label for="">Password:</label>
+                <input type="password" #password="ngModel" name="password" [(ngModel)]="userRegister.password"
+                    class="form-control" required>
+                <span *ngIf="!password.valid && password.touched">
+                    La contraseña es obligatoria
+                </span>
+            </p>
+            <input type="submit" value="LogIn" class="btn btn-primary">
+        </form>
     </div>
-    <div class="col-lg-8 footer">
-        <app-player></app-player>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-lg-1"></div>
-    <div class="col-lg-8">
-        <div>
+
+    <div class="row">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-8 footer">
+            <app-player></app-player>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-8">
             <div>
                 <div>
                     <div>
-                        <a href="https://www.spotify.com/es/legal/" id="" data-encore-id="textLink">
-                            <span data-encore-id="type">Legal</span>
-                        </a>
-                    </div>
-                    <div><a href="https://www.spotify.com/es/privacy/" id="">
-                            <span data-encore-id="type">Centro de Privacidad</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.spotify.com/es/legal/privacy-policy/" id="">
-                            <span data-encore-id="type">Política de Privacidad</span>
-                        </a>
-                    </div>
-                    <div><button id="">
-                            <span data-encore-id="type">Configuración de cookies</span>
-                        </button>
-                    </div>
-                    <div>
-                        <a href="https://www.spotify.com/es/legal/privacy-policy/#s3" id="">
-                            <span data-encore-id="type">Información sobre los anuncios</span>
-                        </a>
-                    </div>
-                    <div>
-                        <a href="https://www.spotify.com/es/accessibility/" id="">
-                            <span data-encore-id="type">Accesibilidad</span>
-                        </a>
+                        <div>
+                            <a href="https://www.spotify.com/es/legal/" id="" data-encore-id="textLink">
+                                <span data-encore-id="type">Legal</span>
+                            </a>
+                        </div>
+                        <div><a href="https://www.spotify.com/es/privacy/" id="">
+                                <span data-encore-id="type">Centro de Privacidad</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://www.spotify.com/es/legal/privacy-policy/" id="">
+                                <span data-encore-id="type">Política de Privacidad</span>
+                            </a>
+                        </div>
+                        <div><button id="">
+                                <span data-encore-id="type">Configuración de cookies</span>
+                            </button>
+                        </div>
+                        <div>
+                            <a href="https://www.spotify.com/es/legal/privacy-policy/#s3" id="">
+                                <span data-encore-id="type">Información sobre los anuncios</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://www.spotify.com/es/accessibility/" id="">
+                                <span data-encore-id="type">Accesibilidad</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div>
                 <div>
-                    <p data-encore-id="type">© 2023 Spotify AB</p>
+                    <div>
+                        <p data-encore-id="type">© 2023 Spotify AB</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>

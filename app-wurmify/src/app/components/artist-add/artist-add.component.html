@@ -1,19 +1,24 @@
 <h1>{{titulo}}</h1>
-
-<form #formArtist="ngForm" (submit)="onSubmit()" class="col-md-8">
-    <p>
-        <label for="">Name:</label>
-        <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" class="form-control" required>
-        <span *ngIf="!name.valid && name.touched">
-            El nombre es obligatorio
-        </span>
-    </p>
-    <p>
-        <label for="">Description:</label>
-        <input type="text" #description="ngModel" name="description" [(ngModel)]="artist.description" class="form-control" required>
-        <span *ngIf="!description.valid && description.touched">
-            La descripción es obligatoria
-        </span>
-    </p>
-    <input type="submit" value="Create Artist" class="btn btn-primary" [disabled]="!formArtist.form.valid">
-</form>
+<div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-6" *ngIf="identity.role == 'ROLE_ADMIN'">
+        <form #formArtist="ngForm" (submit)="onSubmit()" class="col-md-8">
+            <p>
+                <label for="">Name:</label>
+                <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" class="form-control" required>
+                <span *ngIf="!name.valid && name.touched">
+                    El nombre es obligatorio
+                </span>
+            </p>
+            <p>
+                <label for="">Description:</label>
+                <input type="text" #description="ngModel" name="description" [(ngModel)]="artist.description"
+                    class="form-control" required>
+                <span *ngIf="!description.valid && description.touched">
+                    La descripción es obligatoria
+                </span>
+            </p>
+            <input type="submit" value="Create Artist" class="btn btn-primary" [disabled]="!formArtist.form.valid">
+        </form>
+    </div>
+</div>

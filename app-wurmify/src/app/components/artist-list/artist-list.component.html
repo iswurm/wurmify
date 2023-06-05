@@ -1,27 +1,30 @@
-<div class="head-page" *ngIf="identity">
-    <h1>{{titulo}}</h1>
-    <a *ngIf="identity.role == 'ROLE_ADMIN'" class="btn btn-default" [routerLink]="['/add-artist']">Añadir artista</a>
+<div class="row">
+    <div class="head-page" *ngIf="identity">
+        <h1>{{titulo}}</h1>
+        <a *ngIf="identity.role == 'ROLE_ADMIN'" class="btn btn-default" [routerLink]="['/add-artist']">Añadir
+            artista</a>
 
-    <ul class="pagination pull-right">
-        <li><a class="btn btn-default" [routerLink]="['/artists', prev_page]">Atrás</a></li>
-        <li><a class="btn btn-default" [routerLink]="['/artists', next_page]">Adelante</a></li>
-    </ul>
-</div>
-<div class="clearfix"></div>
-<div class="artistList" *ngIf="identity">
-    <ul>
-        <li *ngFor="let artist of artists" class="col-lg3 artist-item">
-        <div class="image-artist">
-            <img src="{{urlAWS + artist.image}}" alt="">
-        </div>
-            <a [routerLink]="['/edit-artist', artist._id]">Editar: {{artist.name}}</a><br>
-            <a [routerLink]="['/artist', artist._id]">Detalles: {{artist.name}}</a><br>
-            <a class="btn btn-default" (click)="onDeleteConfirm(artist._id)">Borrar</a><br>
+        <ul class="pagination pull-right">
+            <li><a class="btn btn-default" [routerLink]="['/artists', prev_page]">Atrás</a></li>
+            <li><a class="btn btn-default" [routerLink]="['/artists', next_page]">Adelante</a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="artistList" *ngIf="identity">
+        <ul>
+            <li *ngFor="let artist of artists" class="col-lg3 artist-item">
+                <div class="image-artist">
+                    <img src="{{urlAWS + artist.image}}" alt="">
+                </div>
+                <a [routerLink]="['/edit-artist', artist._id]">Editar: {{artist.name}}</a><br>
+                <a [routerLink]="['/artist', artist._id]">Detalles: {{artist.name}}</a><br>
+                <a class="btn btn-default" (click)="onDeleteConfirm(artist._id)">Borrar</a><br>
 
-            <div class="seguro" *ngIf="confirmado == artist._id">
-                <a class="btn btn-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
-                <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
-            </div>
-        </li>
-    </ul>
+                <div class="seguro" *ngIf="confirmado == artist._id">
+                    <a class="btn btn-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
+                    <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>

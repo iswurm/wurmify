@@ -1,15 +1,21 @@
-<div class="albumImage">
-    <span *ngIf="song.album">
-        <img src="{{urlAWS + album.image}}" alt="Imagen del álbum">
-    </span>
-</div>
-
-<div class="audioFile">
-    <p>Reproduciendo</p>
-    <span class="songTitle">{{song.name}}</span>
-    <div class="song">
-        <audio controls id="player">
-            <source src="{{urlAWS + song.file}}" id="mp3Source" type="audio/mpeg">
-        </audio>
+<div class="row">
+    <div class="col-lg-1">
+        <div class="albumImage">
+            <span *ngIf="song.album">
+                <img src="{{urlAWS + album.image}}" alt="Imagen del álbum">
+            </span>
+        </div>
     </div>
+    <div class="col-lg-6">
+        <div class="audioFile">
+            <p>Reproduciendo</p>
+            <span class="songTitle">{{song.name}}</span>
+            <div class="song">
+                <audio controls id="player">
+                    <source src="{{urlAWS + song.file}}" id="mp3Source" type="audio/mpeg">
+                </audio>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1"></div>
 </div>

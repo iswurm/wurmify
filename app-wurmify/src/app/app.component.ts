@@ -33,18 +33,13 @@ export class AppComponent{
   }
 
   onSumbit(){
-    //console.log(this.user);
     this._userService.login(this.user, null).subscribe((data) => {
-      console.log(data.usuarioLeido.name);
-      console.log(data.user);
       let identity = data.usuarioLeido;
       this.identity = identity;
       localStorage.setItem('identity', JSON.stringify(data.usuarioLeido));
       if(!data.usuarioLeido._id){
         alert("El usuario no está correctamente identificado");
       }else{
-        //localsotrage identity
-
         this._userService.login(this.user, true).subscribe((data)=>{
           let token = data.token;
           this.token = token;
@@ -57,8 +52,6 @@ export class AppComponent{
           }
         })
       }
-      
-
       let token = data;
       localStorage.setItem('token', data.token);
       console.log(token);
@@ -68,7 +61,7 @@ export class AppComponent{
   onSubmitRegister(){
     console.log(this.userRegister);
     this._userService.register(this.userRegister).subscribe((data)=>{
-      console.log(data);
+      this._router.navigate(['']);
     });
   }
 
