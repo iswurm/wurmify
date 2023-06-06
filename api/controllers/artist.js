@@ -20,10 +20,6 @@ AWS.config.update({
   });
 const s3 = new AWS.S3();
 
-async function pruebas(req, res) {
-  res.status(200).send({ message: "Controlador OK" });
-}
-
 async function saveArtist(req, res) {
   var artist = new Artist();
   var params = req.body;
@@ -35,10 +31,16 @@ async function saveArtist(req, res) {
   if (artist.name != null && artist.description != null) {
     //save
     try {
-      await new artistas(artist).save();
-      return res.send({
-        status: artist
-      });
+      if(!artistExists(params.name)){
+        await new artistas(artist).save();
+        return res.send({
+          status: artist
+        });
+      }else{
+        return res.send({
+          status: "Ya existe ese artista"
+        });
+      }
     } catch (error) {
       return res.status(400).send({
         status: 'failure' + error
@@ -188,5 +190,14 @@ async function deleteArtist(req, res){
   }
 }
 
+async function artistExists(name){
+  const artistaLeido = await artistas.findOne({name: name})
+    if(artistaLeido){
+      return true;
+    }else{
+      return false;
+    }
+}
 
-module.exports = { pruebas, saveArtist, findAll, getArtist, getArtistPaginado, updateArtist, uploadImage, getImageFile, deleteArtist };
+
+module.exports = { saveArtist, findAll, getArtist, getArtistPaginado, updateArtist, uploadImage, getImageFile, deleteArtist };

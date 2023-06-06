@@ -6,7 +6,7 @@
             <p>
                 <label for="">Name:</label>
                 <input type="text" #name="ngModel" name="name" [(ngModel)]="artist.name" class="form-control" required>
-                <span *ngIf="!name.valid && name.touched">
+                <span *ngIf="!name.valid && (name.dirty || name.touched)">
                     El nombre es obligatorio
                 </span>
             </p>
@@ -14,7 +14,7 @@
                 <label for="">Description:</label>
                 <input type="text" #description="ngModel" name="description" [(ngModel)]="artist.description"
                     class="form-control" required>
-                <span *ngIf="!description.valid && description.touched">
+                <span *ngIf="!description.valid && (description.dirty || description.touched)">
                     La descripción es obligatoria
                 </span>
             </p>

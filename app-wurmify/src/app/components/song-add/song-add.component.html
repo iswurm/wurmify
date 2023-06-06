@@ -6,21 +6,21 @@
         <p>
             <label for="">Number:</label>
             <input type="number" #number="ngModel" name="number" [(ngModel)]="song.number" class="form-control" required>
-            <span *ngIf="!name.valid && name.touched">
+            <span *ngIf="!number.valid && (number.dirty || number.touched)">
                 El number es obligatorio
             </span>
         </p>
         <p>
             <label for="">Name:</label>
             <input type="text" #name="ngModel" name="name" [(ngModel)]="song.name" class="form-control" required>
-            <span *ngIf="!name.valid && name.touched">
+            <span *ngIf="!name.valid && (name.dirty || name.touched)">
                 El title es obligatorio
             </span>
         </p>
         <p>
             <label for="">Duration:</label>
             <input type="text" #duration="ngModel" name="duration" [(ngModel)]="song.duration" class="form-control" required>
-            <span *ngIf="!duration.valid && duration.touched">
+            <span *ngIf="!duration.valid && (duration.dirty || duration.touched)">
                 La duración es obligatoria
             </span>
         </p>

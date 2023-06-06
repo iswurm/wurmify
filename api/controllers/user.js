@@ -33,15 +33,17 @@ async function saveUser(req, res) {
     user.password = hash;
     if (user.name != null && user.surname != null && user.email != null) {
       //save
-      try {
-        await new usuarios(user).save();
-        return res.send({
-          status: user
-        });
-      } catch (error) {
-        return res.status(400).send({
-          status: 'failure' + error
-        });
+      if(!emailExists(user.email)){
+        try {
+          await new usuarios(user).save();
+          return res.send({
+            status: user
+          });
+        } catch (error) {
+          return res.status(400).send({
+            status: 'failure' + error
+          });
+        }
       }
     } else {
       res.status(200).send({ message: 'Rellene todos los campos' });
@@ -169,6 +171,15 @@ async function loginUser(req, res) {
       status: 'failure'
     });
   }
+}
+
+async function emailExists(email){
+  const usuarioLeido = await usuarios.findOne({email: email})
+    if(usuarioLeido){
+      return true;
+    }else{
+      return false;
+    }
 }
 
 function isValidPassword(user, password) {

@@ -31,10 +31,17 @@ async function saveAlbum(req, res) {
     if (album.title != null && album.description != null && album.artist) {
         //save
         try {
-            await new albumes(album).save();
-            return res.send({
-                status: album
-            });
+            if(!albumExists(params.title)){
+                await new albumes(album).save();
+                return res.send({
+                    status: album
+                });
+            }else{
+                return res.send({
+                    status: "Ya existe el álbum"
+                });
+            }
+            
         } catch (error) {
             return res.status(400).send({
                 status: 'failure' + error
@@ -43,7 +50,6 @@ async function saveAlbum(req, res) {
     } else {
         res.status(400).send({ message: 'Rellene todos los campos' });
     }
-
 }
 
 async function findAll(req, res) {
@@ -204,6 +210,15 @@ async function deleteAlbum(req, res) {
         });
     }
 }
+
+async function albumExists(album){
+    const albumLeido = await artistas.findOne({title: album})
+      if(albumLeido){
+        return true;
+      }else{
+        return false;
+      }
+  }
 
 
 module.exports = { saveAlbum, findAll, getAlbum, updateAlbum, deleteAlbum, getAlbums, uploadImage, getImageFile, deleteAlbum };

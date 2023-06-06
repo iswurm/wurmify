@@ -13,8 +13,8 @@
     <div class="artistList" *ngIf="identity">
         <ul>
             <li *ngFor="let artist of artists" class="col-lg3 artist-item">
-                <div class="image-artist">
-                    <img src="{{urlAWS + artist.image}}" alt="">
+                <div class="image-artist" *ngIf="artist.image">
+                    <img src="{{urlAWS + artist.image}}" alt="Imagen del artista">
                 </div>
                 <a [routerLink]="['/edit-artist', artist._id]">Editar: {{artist.name}}</a><br>
                 <a [routerLink]="['/artist', artist._id]">Detalles: {{artist.name}}</a><br>
