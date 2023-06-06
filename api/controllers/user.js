@@ -36,6 +36,7 @@ async function saveUser(req, res) {
 
       try {
         const result = await usuarios.findOne({ 'email': user.email });
+        console.log(result);
         if(!result){
           try {
             await new usuarios(user).save();
@@ -183,20 +184,14 @@ async function loginUser(req, res) {
   }
 }
 
-async function emailExists(email) {
-  try {
-    const usuarioLeido = await usuarios.findOne({ email: email })
-    console.log(usuarioLeido);
-    if (usuarioLeido) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-
+function isValidPassword(user, password) {
+  var result = bcrypt.compareSync(password, user.password);
+  if (result) {
+    console.log("Password correct");
+  } else {
+    console.log("Password wrong");
   }
-
+  return result;
 }
-
 
 module.exports = { pruebas, saveUser, findAll, loginUser, updateUser, uploadImage, getImageFile };
