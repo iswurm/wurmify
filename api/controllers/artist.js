@@ -15,9 +15,9 @@ const canciones = mongoose.model('Song');
 
 const AWS = require('aws-sdk');
 AWS.config.update({
-    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
-    secretAccessKey: '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'
-  });
+  accessKeyId: 'AKIAU727EPNRDMRYWXPS',
+  secretAccessKey: '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'
+});
 const s3 = new AWS.S3();
 
 async function saveArtist(req, res) {
@@ -31,15 +31,18 @@ async function saveArtist(req, res) {
   if (artist.name != null && artist.description != null) {
     //save
     try {
-      if(!artistExists(params.name)){
-        await new artistas(artist).save();
-        return res.send({
-          status: artist
-        });
-      }else{
-        return res.send({
-          status: "Ya existe ese artista"
-        });
+      const result = await artistas.findOne({ 'name': artist.name });
+      await new artistas(artist).save();
+      if (!result) {
+        try {
+          return res.send({
+            status: artist
+          });
+        } catch (error) {
+          return res.send({
+            status: "errorrrr"
+          })
+        }
       }
     } catch (error) {
       return res.status(400).send({
@@ -140,10 +143,10 @@ async function uploadImage(req, res) {
         s3.upload(params, (err, data) => {
           if (err) {
             console.log("fail");
-          }else{
+          } else {
             console.log(data);
           }
-          
+
         })
         return res.send({
           image: fileName,
@@ -175,29 +178,21 @@ async function getImageFile(req, res) {
   }
 }
 
-async function deleteArtist(req, res){
+async function deleteArtist(req, res) {
   var artistId = req.params.id;
-  try{
-      await artistas.findOneAndRemove({_id: artistId});
-      await albumes.findOneAndRemove({artist: artistId});
-      await canciones.findOneAndRemove({album: artistId});
-      //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
-      //return res.status(200).send("Borrado de album con éxito");    
-  }catch(error){
-      return res.status(400).send({
-          status: 'failure en removeAlbum'
-      });
+  try {
+    await artistas.findOneAndRemove({ _id: artistId });
+    await albumes.findOneAndRemove({ artist: artistId });
+    await canciones.findOneAndRemove({ album: artistId });
+    //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
+    //return res.status(200).send("Borrado de album con éxito");    
+  } catch (error) {
+    return res.status(400).send({
+      status: 'failure en removeAlbum'
+    });
   }
 }
 
-async function artistExists(name){
-  const artistaLeido = await artistas.findOne({name: name})
-    if(artistaLeido){
-      return true;
-    }else{
-      return false;
-    }
-}
 
 
 module.exports = { saveArtist, findAll, getArtist, getArtistPaginado, updateArtist, uploadImage, getImageFile, deleteArtist };

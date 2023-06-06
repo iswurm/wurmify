@@ -9,9 +9,9 @@ var path = require('path');
 
 const AWS = require('aws-sdk');
 AWS.config.update({
-    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
-    secretAccessKey: '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'
-  });
+  accessKeyId: 'AKIAU727EPNRDMRYWXPS',
+  secretAccessKey: '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'
+});
 const s3 = new AWS.S3();
 
 async function pruebas(req, res) {
@@ -33,17 +33,27 @@ async function saveUser(req, res) {
     user.password = hash;
     if (user.name != null && user.surname != null && user.email != null) {
       //save
-      if(!emailExists(user.email)){
-        try {
-          await new usuarios(user).save();
-          return res.send({
-            status: user
-          });
-        } catch (error) {
-          return res.status(400).send({
-            status: 'failure' + error
-          });
+
+      try {
+        const result = await usuarios.findOne({ 'email': user.email });
+        if(!result){
+          try {
+            await new usuarios(user).save();
+            console.log("good");
+            return res.send({
+              status: user
+            });
+          } catch (error) {
+            return res.send({
+              status: "errorrrr"
+            })
+          }
         }
+        
+      } catch (error) {
+        return res.status(400).send({
+          status: 'failure' + error
+        });
       }
     } else {
       res.status(200).send({ message: 'Rellene todos los campos' });
@@ -99,19 +109,19 @@ async function uploadImage(req, res) {
       try {
         const user = await usuarios.findByIdAndUpdate(userId, { image: fileName });
         const fileContent = fs.readFileSync(filePath);
-                const params = {
-                  Bucket: 'wurmify',
-                  Key: fileName,
-                  Body: fileContent
-                }
-                s3.upload(params, (err, data) => {
-                  if (err) {
-                    console.log("fail");
-                  }else{
-                    console.log(data);
-                  }
-                  
-                })
+        const params = {
+          Bucket: 'wurmify',
+          Key: fileName,
+          Body: fileContent
+        }
+        s3.upload(params, (err, data) => {
+          if (err) {
+            console.log("fail");
+          } else {
+            console.log(data);
+          }
+
+        })
         return res.send({
           image: fileName,
           user: user
@@ -173,23 +183,20 @@ async function loginUser(req, res) {
   }
 }
 
-async function emailExists(email){
-  const usuarioLeido = await usuarios.findOne({email: email})
-    if(usuarioLeido){
+async function emailExists(email) {
+  try {
+    const usuarioLeido = await usuarios.findOne({ email: email })
+    console.log(usuarioLeido);
+    if (usuarioLeido) {
       return true;
-    }else{
+    } else {
       return false;
     }
+  } catch (error) {
+
+  }
+
 }
 
-function isValidPassword(user, password) {
-  var result = bcrypt.compareSync(password, user.password);
-  if (result) {
-    console.log("Password correct");
-  } else {
-    console.log("Password wrong");
-  }
-  return result;
-}
 
 module.exports = { pruebas, saveUser, findAll, loginUser, updateUser, uploadImage, getImageFile };

@@ -10,11 +10,11 @@ var Song = require('../models/song');
 const mongoose = require('mongoose');
 const artistas = mongoose.model('Artist');
 const albumes = mongoose.model('Album');
-const canciones = mongoose.model('Song');const AWS = require('aws-sdk');
+const canciones = mongoose.model('Song'); const AWS = require('aws-sdk');
 AWS.config.update({
     accessKeyId: 'AKIAU727EPNRDMRYWXPS',
     secretAccessKey: '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'
-  });
+});
 const s3 = new AWS.S3();
 
 
@@ -31,17 +31,19 @@ async function saveAlbum(req, res) {
     if (album.title != null && album.description != null && album.artist) {
         //save
         try {
-            if(!albumExists(params.title)){
-                await new albumes(album).save();
-                return res.send({
-                    status: album
-                });
-            }else{
-                return res.send({
-                    status: "Ya existe el álbum"
-                });
+            const result = await albumes.findOne({ 'title': album.title });
+            if (!result) {
+                try {
+                    await new albumes(album).save();
+                    return res.send({
+                        status: album
+                    });
+                } catch (error) {
+                    return res.send({
+                        status: "errorrrr"
+                    })
+                }
             }
-            
         } catch (error) {
             return res.status(400).send({
                 status: 'failure' + error
@@ -155,17 +157,17 @@ async function uploadImage(req, res) {
                 const album = await albumes.findByIdAndUpdate(albumId, { image: fileName });
                 const fileContent = fs.readFileSync(filePath);
                 const params = {
-                  Bucket: 'wurmify',
-                  Key: fileName,
-                  Body: fileContent
+                    Bucket: 'wurmify',
+                    Key: fileName,
+                    Body: fileContent
                 }
                 s3.upload(params, (err, data) => {
-                  if (err) {
-                    console.log("fail");
-                  }else{
-                    console.log(data);
-                  }
-                  
+                    if (err) {
+                        console.log("fail");
+                    } else {
+                        console.log(data);
+                    }
+
                 })
                 return res.send({
                     image: fileName,
@@ -200,25 +202,17 @@ async function getImageFile(req, res) {
 async function deleteAlbum(req, res) {
     var albumId = req.params.id;
     try {
-        await albumes.findOneAndRemove({_id: albumId});
-        await canciones.findOneAndRemove({album: albumId});
+        await albumes.findOneAndRemove({ _id: albumId });
+        await canciones.findOneAndRemove({ album: albumId });
         //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
         //return res.status(200).send("Borrado de album con éxito");    
-    }catch(error){
+    } catch (error) {
         return res.status(400).send({
             status: 'failure en removeAlbum'
         });
     }
 }
 
-async function albumExists(album){
-    const albumLeido = await artistas.findOne({title: album})
-      if(albumLeido){
-        return true;
-      }else{
-        return false;
-      }
-  }
 
 
 module.exports = { saveAlbum, findAll, getAlbum, updateAlbum, deleteAlbum, getAlbums, uploadImage, getImageFile, deleteAlbum };
