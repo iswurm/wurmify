@@ -36,10 +36,13 @@ async function saveSong(req, res) {
     if (song.name != null && song.duration != null && song.album) {
         //save
         try {
-            await new songs(song).save();
-            return res.send({
-                status: song
-            });
+            const result = await songs.findOne({ 'name': song.name });
+            if(!result){
+                await new songs(song).save();
+                return res.send({
+                    status: song
+                });
+            }
         } catch (error) {
             return res.status(400).send({
                 status: 'failure' + error

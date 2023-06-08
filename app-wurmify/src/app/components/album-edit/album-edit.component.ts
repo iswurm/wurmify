@@ -43,7 +43,7 @@ export class AlbumEditComponent {
     this._route.params.forEach((params: Params) => {
       let id = params['id'];
       this._albumService.editAlbum(this.token, id, this.album).subscribe((data)=>{
-        if(!this.filesToUpload){
+        if(this.filesToUpload.length == 0){
           alert("no hay imagen");
           this._router.navigate(['/artists', 1]);
         }else{
@@ -66,7 +66,6 @@ export class AlbumEditComponent {
   }
 
   getAlbum(){
-    console.log("aa");
     this._route.params.forEach((params: Params) => {
       let id = params['id'];
       this._albumService.getAlbum(this.token, id).subscribe((data: any)=>{

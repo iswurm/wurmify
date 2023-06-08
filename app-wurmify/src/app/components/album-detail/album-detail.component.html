@@ -9,22 +9,22 @@
     <div class="album" *ngIf="album">
         <p>Album</p>
         <div class="pic">
-            <img src="{{urlAWS + album.image}}" alt="">
+            <img src="{{urlAWS + album.image}}" alt="Imagen del álbum" id="imagen-album">
         </div>
         
         <h2>{{album.title}}</h2>
-        <h3>{{album.description}}</h3>
-        <h3>{{album.year}}</h3>
+        <h4>{{album.description}}</h4>
+        <h6>{{album.year}}</h6>
 
         <div class="songs-list">
             <ul *ngFor="let song of songs">
                 <li>
                     {{song.number}}: 
                     {{song.name}}
-                    <a (click)="startPlayer(song)" class="btn btn-success">
+                    <a (click)="startPlayer(song)" class="btn btn-default">
                         <i class="bi bi-play-fill" id="masterPlay"></i>
                     </a>
-                    <a [routerLink]="['/edit-song', song._id]">Editar</a>
+                    <a [routerLink]="['/edit-song', song._id]" class="btn btn-default">Editar</a>
                     <a class="btn btn-default" (click)="onDeleteConfirm(song._id)">Borrar</a><br>
                     <div class="seguro" *ngIf="confirmado == song._id">
                         <a class="btn btn-danger" (click)="onDeleteSong(song._id)">ELIMINAR </a>

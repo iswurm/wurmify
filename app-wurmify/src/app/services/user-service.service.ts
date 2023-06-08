@@ -26,14 +26,11 @@ export class UserServiceService {
     }
     let params = JSON.stringify(user);
     return this.http.post(this.apiRestUrl + 'login', params, this.httpOptions);
-
   }
 
   register(userToRegister: any){
-    //VALIDAR!!!!
     let params = JSON.stringify(userToRegister);
     return this.http.post(this.apiRestUrl + 'register', params, this.httpOptions);
-
   }
 
 

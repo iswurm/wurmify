@@ -118,7 +118,7 @@ async function updateAlbum(req, res) {
 
     try {
         const album = await Album.findByIdAndUpdate(albumId, update);
-        return res.send({
+        return res.status(200).send({
             album: album
         })
     } catch (error) {
@@ -144,7 +144,7 @@ async function deleteAlbum(req, res) {
 async function uploadImage(req, res) {
     var albumId = req.params.id;
     var fileName = 'No subido';
-    console.log(req.files);
+    console.log(req.files.image);
     if (req.files) {
         var filePath = req.files.image.path;
         var fileSplit = filePath.split('\\');

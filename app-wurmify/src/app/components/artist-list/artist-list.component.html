@@ -10,21 +10,39 @@
         </ul>
     </div>
     <div class="clearfix"></div>
-    <div class="artistList" *ngIf="identity">
-        <ul>
-            <li *ngFor="let artist of artists" class="col-lg3 artist-item">
-                <div class="image-artist" *ngIf="artist.image">
-                    <img src="{{urlAWS + artist.image}}" alt="Imagen del artista">
-                </div>
-                <a [routerLink]="['/edit-artist', artist._id]">Editar: {{artist.name}}</a><br>
-                <a [routerLink]="['/artist', artist._id]">Detalles: {{artist.name}}</a><br>
-                <a class="btn btn-default" (click)="onDeleteConfirm(artist._id)">Borrar</a><br>
-
-                <div class="seguro" *ngIf="confirmado == artist._id">
-                    <a class="btn btn-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
-                    <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
-                </div>
-            </li>
-        </ul>
-    </div>
 </div>
+
+    <div class="artist-list" *ngIf="identity">
+        <div >
+            <div class="row">
+                <div *ngFor="let artist of artists" class="col-lg-3 col-xl-3 col-sm-8 col-md-9" id="card">
+                    <div class="col">
+                    <div class="card h-100 shadow-sm" style="width: 16rem;">
+                        <img src="{{urlAWS + artist.image}}" class="card-img-top" alt="Imagen del artista">
+                        <div class="card-body">
+                            <h5 class="card-title">{{artist.name}}</h5>
+                            <p class="card-text">{{artist.description}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" *ngIf="identity.role == 'ROLE_ADMIN'"><a
+                                    [routerLink]="['/edit-artist', artist._id]">Editar:
+                                    {{artist.name}}</a></li>
+                            <li class="list-group-item"><a [routerLink]="['/artist', artist._id]">Detalles:
+                                    {{artist.name}}</a>
+                            </li>
+                            <li class="list-group-item" *ngIf="identity.role == 'ROLE_ADMIN'"><a class="btn btn-default"
+                                    (click)="onDeleteConfirm(artist._id)">Borrar</a></li>
+                        </ul>
+                        <ng-container class="seguro" *ngIf="confirmado == artist._id">
+                            <a class="btn btn-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
+                            <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
+                        </ng-container>
+                    </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+

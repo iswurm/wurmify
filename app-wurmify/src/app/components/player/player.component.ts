@@ -20,6 +20,7 @@ export class PlayerComponent {
   public identity: any;
   public token: any;
   public song: Song;
+  public artistName: String;
   public filesToUpload: Array<File> = [];
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
@@ -33,15 +34,32 @@ export class PlayerComponent {
     this.artist = new Artist('', '', '', '');
     this.album = new Album('', '', '', 0, '', '');
     this.song = new Song('', '', '', 0, '', '');
+    this.artistName = "";
   }
 
   ngOnInit() {
     var song = JSON.parse(localStorage.getItem("sound") as string);
-    if(song){
+    if (song) {
       this.song = song;
-    }else{
+      this.getAlbum();
+      this.getArtist();
+    } else {
       this.song = new Song('', '', '', 0, '', '');
     }
   }
 
+  getAlbum() {
+    this._albumService.getAlbum(this.token, this.song.album).subscribe((data: any) => {
+      this.album = data;
+      this.artist = JSON.parse(JSON.stringify(this.album.artist));
+      console.log(this.artist);
+    })
+  }
+
+  getArtist(){
+      this._artistService.getArtist(this.token, this.album.artist).subscribe((data: any)=>{
+        console.log(data)
+        this.artist = data;
+      })
+  }
 }

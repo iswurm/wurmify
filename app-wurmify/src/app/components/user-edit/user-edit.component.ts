@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { User } from 'src/app/models/user';
@@ -17,29 +18,33 @@ export class UserEditComponent {
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
 
-  constructor(private _userService:UserServiceService){
+  constructor(private _userService:UserServiceService,
+    private _route: ActivatedRoute,
+    private _router: Router,){
     //LocalStorage
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
     this.user = this.identity;
   }
-  
+
   ngOnInit(){
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
-    console.log(this.identity.image);
   }
 
   onSubmit(){
+    console.log(this.user);
     this._userService.updateUser(this.user).subscribe((data) =>{
-      if(!this.filesToUpload){
-        alert("no hay imagen");
+      console.log(this.filesToUpload);
+      if(this.filesToUpload.length == 0){
+        this.token = this._userService.getToken();
+        localStorage.setItem("identity", JSON.stringify(this.user));
+        this._router.navigate(['/artists', 1]);
+
       }else{
         this.makeFileRequest(this.url+'upload-image-user/'+this.user._id, [], this.filesToUpload).then(
           (result: any) =>{
             this.user.image = result.image;
-            console.log(this.user);
-            console.log("IMAGEN: " + result.image);
             localStorage.setItem('identity', JSON.stringify(this.user));
           }
         );

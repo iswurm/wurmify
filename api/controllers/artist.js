@@ -32,9 +32,9 @@ async function saveArtist(req, res) {
     //save
     try {
       const result = await artistas.findOne({ 'name': artist.name });
-      await new artistas(artist).save();
       if (!result) {
         try {
+          await new artistas(artist).save();
           return res.send({
             status: artist
           });
@@ -43,6 +43,10 @@ async function saveArtist(req, res) {
             status: "errorrrr"
           })
         }
+      }else{
+        return res.send({
+          status: "errorrrr"
+        })
       }
     } catch (error) {
       return res.status(400).send({
@@ -110,7 +114,7 @@ async function updateArtist(req, res) {
 
   try {
     const artist = await artistas.findByIdAndUpdate(artistId, update);
-    return res.send({
+    return res.status(200).send({
       artist: artist
     });
   } catch (error) {
@@ -124,7 +128,7 @@ async function uploadImage(req, res) {
   var artistId = req.params.id;
   var fileName = 'No subido';
   console.log(req.files);
-  if (req.files) {
+  if (req.files.image) {
     var filePath = req.files.image.path;
     var fileSplit = filePath.split('\\');
     var fileName = fileSplit[2];

@@ -1,20 +1,27 @@
 <div class="row">
-    <div class="col-lg-2"></div>
+    <div class="col-lg-1"></div>
     <div *ngIf="identity || token" class="navigation col-lg-10 col-md-8 col-sm-10">
         <h1 class="head-title">
-            <a [routerLink]="['/']">{{title}}</a>
+            <span id="enlace-titulo"><a [routerLink]="['/']">{{title}}</a></span>
+
         </h1>
 
         <nav id="userLogged" class="menu_side">
-            <span id="identity_name">{{identity.name}}</span><br>
-            <img src="{{urlAWS + identity.image}}" /><br>
-            <span class="btn btn-warning" (click)="logout()"><i class="bi bi-box-arrow-left"></i></span><br>
-            <div class="enlaces-menu">
-                <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']">Mis Datos <span
-                        class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a><br>
-                <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">Artistas <span
-                        class="glyphicon glyphicon-cog" aria-hidden="true"></span> </a>
+            <div class="row">
+                <div id="enlaces-menu">
+                    <div class="topnav" id="myTopnav">
+                        <img src="{{urlAWS + identity.image}}" id="imagen-perfil-navbar"/>
+                        <a (click)="logout()"><i class="bi bi-box-arrow-left"></i></a>
+                        <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']"><i
+                                class="bi bi-gear-fill"></i></a>
+                        <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">Artistas </a>
+                        <a [routerLink]="['/']"><i class="bi bi-house-fill"></i></a>
+                    </div>
+                </div>
+
             </div>
+
+
             <router-outlet></router-outlet>
         </nav>
     </div>
@@ -45,7 +52,7 @@
         </form>
     </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="!token">
     <div class="col-lg-4 col-md-1 col-sm-1"></div>
     <div class="col-lg-4 col-md-8 col-sm-10">
         <h1>Sign In</h1>
@@ -85,57 +92,106 @@
             <input type="submit" value="LogIn" class="btn btn-primary">
         </form>
     </div>
+</div>
 
-
-    <div class="row">
-        <div class="col-lg-2">
-        </div>
-        <div class="col-lg-8 footer">
-            <app-player></app-player>
-        </div>
+<div class="row" *ngIf="token">
+    <div class="col-lg-2">
     </div>
+    <div class="col-lg-8">
+        <app-player></app-player>
+    </div>
+</div>
 
-    <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-8">
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <a href="https://www.spotify.com/es/legal/" id="" data-encore-id="textLink">
-                                <span data-encore-id="type">Legal</span>
-                            </a>
-                        </div>
-                        <div><a href="https://www.spotify.com/es/privacy/" id="">
-                                <span data-encore-id="type">Centro de Privacidad</span>
-                            </a>
-                        </div>
-                        <div>
-                            <a href="https://www.spotify.com/es/legal/privacy-policy/" id="">
-                                <span data-encore-id="type">Política de Privacidad</span>
-                            </a>
-                        </div>
-                        <div><button id="">
-                                <span data-encore-id="type">Configuración de cookies</span>
-                            </button>
-                        </div>
-                        <div>
-                            <a href="https://www.spotify.com/es/legal/privacy-policy/#s3" id="">
-                                <span data-encore-id="type">Información sobre los anuncios</span>
-                            </a>
-                        </div>
-                        <div>
-                            <a href="https://www.spotify.com/es/accessibility/" id="">
-                                <span data-encore-id="type">Accesibilidad</span>
-                            </a>
-                        </div>
+<!-- Remove the container if you want to extend the Footer to full width. -->
+<div class="container my-5">
+
+    <!-- Footer -->
+    <footer class="text-center text-lg-start text-white">
+        <!-- Section: Social media -->
+
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold">Wurmify</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            Plataforma independiente para el streaming de tus artistas favoritos.
+                        </p>
                     </div>
-                </div>
-                <div>
-                    <div>
-                        <p data-encore-id="type">© 2023 Spotify AB</p>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Products</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            <a href="#!" class="text-white">MDBootstrap</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-white">MDWordPress</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-white">BrandFlow</a>
+                        </p>
+                        <p>
+                            <a href="#!" class="text-white">Bootstrap Angular</a>
+                        </p>
                     </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Enlaces de interés</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p>
+                            <a href="https://github.com/iswurm/wurmify" class="text-white">Repositorio de GitHub</a>
+                        </p>
+                        <p>
+                            <a href="https://site.educa.madrid.org/ies.elcanaveral.mostoles/" class="text-white">I.E.S.
+                                El Cañaveral</a>
+                        </p>
+                        <p>
+                            <a href="https://aws.amazon.com/es/" class="text-white">Amazon Web Services</a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold">Contacto</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto"
+                            style="width: 60px; background-color: #7c4dff; height: 2px" />
+                        <p><i class="fas fa-home mr-3"></i> Griñón, Madrid. 28971</p>
+                        <p><i class="fas fa-envelope mr-3"></i> ignaciosanchezwurm@gmail.com</p>
+                        <p><i class="fas fa-phone mr-3"></i> + 34 645 140 413</p>
+                    </div>
+                    <!-- Grid column -->
                 </div>
+                <!-- Grid row -->
             </div>
+        </section>
+        <!-- Section: Links  -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3">
+            <p data-encore-id="type">© 2023 Wurmify AB</p>
         </div>
-    </div>
+        <!-- Copyright -->
+    </footer>
+    <!-- Footer -->
+
+</div>
+<!-- End of .container -->

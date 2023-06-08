@@ -28,8 +28,6 @@ export class AppComponent{
   ngOnInit(){
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
-    console.log("Token " + this.token);
-    console.log( this.identity);
   }
 
   onSumbit(){

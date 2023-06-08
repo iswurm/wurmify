@@ -50,11 +50,11 @@ export class AlbumDetailComponent {
         this.album = data;
         this._songService.getSongs(this.token, this.album._id).subscribe((data: any) => {
           this.songs = data;
-          console.log(this.songs);
         })
       })
     })
   }
+
 
   onDeleteConfirm(id: string) {
     this.confirmado = id;
@@ -80,12 +80,13 @@ export class AlbumDetailComponent {
   startPlayer(song: Song) {
     let songPlayer = JSON.stringify(song);
     let filePath = this.urlAWS + song.file;
-    let imagePath = this.url + 'get-image-album/' + this.album.image;
-    console.log(filePath);
+    let imagePath = this.urlAWS + this.album.image;
+    console.log(imagePath);
     localStorage.setItem("sound", songPlayer);
-    document.getElementById('mp3Source')?.setAttribute("src", filePath);
+    document.getElementById('mp3-source')?.setAttribute("src", filePath);
     (document.getElementById('player') as any).load();
     (document.getElementById('player') as any).play();
-
+    (document.getElementById('player-song-name') as any).innerHTML = song.name;
+    (document.getElementById('img-player') as any).src = imagePath;
   }
 }

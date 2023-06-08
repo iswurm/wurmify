@@ -80,13 +80,10 @@ async function findAll(req, res) {
 async function updateUser(req, res) {
   var userId = req.params.id;
   var update = req.body;
-
-  console.log(userId);
-  console.log(req.user.sub);
   try {
     const user = await usuarios.findByIdAndUpdate(userId, update);
-    return res.send({
-      user: user
+    return res.status(200).send({
+      usuario: user
     });
   } catch (error) {
     return res.status(400).send({
@@ -99,7 +96,7 @@ async function uploadImage(req, res) {
   var userId = req.params.id;
   var fileName = 'No subido';
 
-  if (req.files) {
+  if (req.files.image) {
     var filePath = req.files.image.path;
     var fileSplit = filePath.split('\\');
     var fileName = fileSplit[2];
