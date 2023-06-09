@@ -1,33 +1,34 @@
 <div class="row">
     <div *ngIf="artist" class="artist-box">
         <div class="artist-head-card">
-            <div *ngIf="artist.image" class="image-artist">
-                <img src="{{urlAWS + artist.image}}" alt="">
-            </div>
-            <div class="data">
-                <h1>{{artist.name}}</h1>
-                <p class="description">{{artist.description}}</p>
-                <a *ngIf="identity.role == 'ROLE_ADMIN'" [routerLink]="['/add-album', artist._id]"
-                    class="btn btn-default">Añadir álbum</a>
+            <div class="row">
+                <div *ngIf="artist.image" class="col-xl-3 col-lg-3 col-md-5 col-xs-2 col-sm-5">
+                    <img src="{{urlAWS + artist.image}}" class="card-img-top" id="imagen-artista" alt="" style="  
+                width: 11rem;
+                box-shadow: 10px 5px 5px black;">
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-7 col-xs-2 col-sm-5">
+                    <h2>{{artist.name}}</h2>
+                    <p class="description">{{artist.description}}</p>
+                    <a *ngIf="identity.role == 'ROLE_ADMIN'" [routerLink]="['/add-album', artist._id]"
+                        class="btn btn-default">Añadir álbum</a>
+                </div>
             </div>
         </div>
 
         <div class="clearfix"></div>
         <div class="gallery-albums" *ngIf="albums">
-            <p>Albumes</p>
             <ul class="albums-list">
-                <li *ngFor="let album of albums" class="col-lg-4 album-item">
-                    <p>{{album.title}}</p>
-                    <a class="btn btn-danger" [routerLink]="['/album', album._id]">DETALLES </a>
+                <h5>Discografía</h5>
+                <li *ngFor="let album of albums" class="col-lg-4 album-item" style="margin: 6px;">
+                    <a class="btn btn-default" [routerLink]="['/album', album._id]">{{album.title}}</a>
                     <div class="pic">
-                        <img src="{{urlAWS + album.image}}" alt="">
+                        <img src="{{urlAWS + album.image}}" class="card-img-top" id="imagen" alt="">
                     </div>
                     <div *ngIf="identity.role == 'ROLE_ADMIN'" class="edicion">
-                        <p>
-                            <a [routerLink]="['/edit-album', album._id]">
-                                Editar: {{album.title}}
-                            </a>
-                        </p>
+                        <a class="btn btn-default" [routerLink]="['/edit-album', album._id]">
+                            Editar
+                        </a>
                         <a class="btn btn-default" (click)="onDeleteConfirm(album._id)">Borrar</a><br>
 
                         <div class="seguro" *ngIf="confirmado == album._id">
