@@ -61,8 +61,6 @@ export class SongEditComponent {
           this.makeFileRequest(this.url + 'upload-song-file/' + songId, [], this.filesToUpload, this.token, "song").then(
             (result: any) => {
               this.song.file = result.file;
-              console.log(result);
-              console.log(this.song.file);
               //this._router.navigate(['/artists', 1]);
             }
           );

@@ -1,48 +1,58 @@
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+            <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+            <li class="breadcrumb-spotify-item"><a href="#">Artistas</a></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
     <div class="head-page" *ngIf="identity">
         <h1>{{titulo}}</h1>
         <a *ngIf="identity.role == 'ROLE_ADMIN'" class="btn btn-default" [routerLink]="['/add-artist']">Añadir
             artista</a>
 
         <ul class="pagination pull-right">
-            <li><a class="btn btn-default" [routerLink]="['/artists', prev_page]">Atrás</a></li>
-            <li><a class="btn btn-default" [routerLink]="['/artists', next_page]">Adelante</a></li>
+            <li><a class="btn btn-default" [routerLink]="['/artists', prev_page]"><i class="bi bi-arrow-left"></i></a>
+            </li>
+            <li><a class="btn btn-default" [routerLink]="['/artists', next_page]"><i class="bi bi-arrow-right"></i></a>
+            </li>
         </ul>
     </div>
     <div class="clearfix"></div>
 </div>
 
-    <div class="artist-list" *ngIf="identity">
-        <div >
-            <div class="row">
-                <div *ngFor="let artist of artists" class="col-lg-3 col-xl-3 col-sm-8 col-md-9" id="card">
-                    <div class="col">
-                    <div class="card h-100 shadow-sm" style="width: 16rem;">
-                        <img src="{{urlAWS + artist.image}}" class="card-img-top" alt="Imagen del artista">
-                        <div class="card-body">
-                            <h5 class="card-title">{{artist.name}}</h5>
-                            <p class="card-text">{{artist.description}}</p>
+
+
+<div class="artist-list" *ngIf="identity">
+    <div>
+        <div class="row">
+            <div *ngFor="let artist of artists" class="col-lg-3 col-xl-3 col-sm-8 col-md-9" id="card">
+                <div class="card card-spotify" style="width: 18rem;">
+                    <div class="contenerdor-img-card">
+                            <img src="{{urlAWS + artist.image}}" class="card-img-top" alt="Imagen del artista">
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" *ngIf="identity.role == 'ROLE_ADMIN'"><a
-                                    [routerLink]="['/edit-artist', artist._id]">Editar:
-                                    {{artist.name}}</a></li>
-                            <li class="list-group-item"><a [routerLink]="['/artist', artist._id]">Detalles:
-                                    {{artist.name}}</a>
-                            </li>
-                            <li class="list-group-item" *ngIf="identity.role == 'ROLE_ADMIN'"><a class="btn btn-default"
-                                    (click)="onDeleteConfirm(artist._id)">Borrar</a></li>
-                        </ul>
-                        <ng-container class="seguro" *ngIf="confirmado == artist._id">
-                            <a class="btn btn-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
-                            <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
-                        </ng-container>
-                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title album-name"><a id="enlace-artist-detail"
+                            [routerLink]="['/artist', artist._id]">{{artist.name}}</a></h5>
+                        <p class="card-text artist-name">{{artist.description}}</p>
+                        <div *ngIf="identity.role == 'ROLE_ADMIN'" class="edicion">
+                            <a class="btn btn-default" [routerLink]="['/edit-artist', artist._id]">
+                                Editar
+                            </a>
+                            <a class="btn btn-default" (click)="onDeleteConfirm(artist._id)">Borrar</a><br>
+
+                            <div class="seguro" *ngIf="confirmado == artist._id">
+                                <a class="btn-spotify-danger" (click)="onDeleteArtist(artist._id)">ELIMINAR </a>
+                                <a class="btn btn-default" (click)="onCancelArtist(artist._id)">Cancelar</a><br>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
+
+
         </div>
     </div>
-
+</div>

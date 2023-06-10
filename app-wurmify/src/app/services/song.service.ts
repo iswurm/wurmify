@@ -46,7 +46,7 @@ export class SongService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    if(albumId == null){
+    if(albumId == ""){
       return this.http.get(this.apiRestUrl+'songs/', headers);
     }else{
       return this.http.get(this.apiRestUrl+'songs/'+albumId, headers);

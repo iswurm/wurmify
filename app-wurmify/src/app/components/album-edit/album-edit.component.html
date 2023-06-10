@@ -1,7 +1,19 @@
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artists', 1]">Artistas</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artist', artist._id]">{{artist.name}}</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/album', album._id]">{{album.title}}</a></li>
+          <li class="breadcrumb-spotify-item"><a href="#">Editar álbum</a></li>
+        </ol>
+      </nav>
+</div>
+
+<div class="row">
     <div class="col-lg-1"></div>
     <div class="col-lg-6" *ngIf="identity.role == 'ROLE_ADMIN'">
-        <h2>Update Album</h2>
+        <h2>Actualizar álbum</h2>
         
         <span id="identity_name">Bienvenido, {{identity.name}} </span><span id="">{{identity.surname}}</span><br>
 

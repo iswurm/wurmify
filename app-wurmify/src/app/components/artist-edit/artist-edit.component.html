@@ -1,4 +1,15 @@
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artists', 1]">Artistas</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artist', artist._id]">{{artist.name}}</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artists', 1]">Editar</a></li>
+        </ol>
+      </nav>
+</div>
+
+<div class="row">
     <div class="col-lg-2"></div>
     <div class="col-lg-6" *ngIf="identity.role == 'ROLE_ADMIN'">
         <h2>Actualizar Artista</h2>
@@ -28,7 +39,7 @@
                 </div>
                 <input type="file" name="image" placeholder="Upload an artist picture" (change)="fileChangeEvent($event)">
             </div>
-            <input type="submit" value="Actualizar artista" class="btn btn-default" [disabled]="!updateArtist.form.valid">
+            <input type="submit" value="Actualizar artista" class="btn-spotify" [disabled]="!updateArtist.form.valid">
         </form>
     </div>
     <div class="col-lg-2"></div>

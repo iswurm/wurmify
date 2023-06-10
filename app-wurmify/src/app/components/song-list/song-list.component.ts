@@ -10,21 +10,23 @@ import { Album } from 'src/app/models/album';
 import { Song } from 'src/app/models/song';
 
 @Component({
-  selector: 'app-album-detail',
-  templateUrl: './album-detail.component.html',
-  styleUrls: ['./album-detail.component.scss']
+  selector: 'app-song-list',
+  templateUrl: './song-list.component.html',
+  styleUrls: ['./song-list.component.scss']
 })
-export class AlbumDetailComponent {
+export class SongListComponent {
   public artist: Artist;
-  public album: Album;
   public identity: any;
   public token: any;
   public albums: Album[];
   public songs: Song[];
+  public album: Album;
   public filesToUpload: Array<File> = [];
   public url: String = 'http://localhost:3977/api/';
-  public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/'; 
+  public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
   public confirmado: string;
+  public nombre: string = "";
+  public searchoption: string = "";
 
   constructor(
     private _route: ActivatedRoute,
@@ -33,27 +35,52 @@ export class AlbumDetailComponent {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.artist = new Artist('', '', '', '');
-    this.album = new Album('', '', '', 0, '', '');
+    this.album = new Album('', '', '', 2023, '', ''); 
     this.albums = [];
     this.songs = [];
     this.confirmado = "";
   }
 
   ngOnInit() {
-    this.getAlbum();
+    this.loadSongs();
+    this.getAlbums();
+    console.log(this.songs);
   }
 
-  getAlbum() {
-    this._route.params.forEach((params: Params) => {
-      let id = params['id'];
-      this._albumService.getAlbum(this.token, id).subscribe((data: any) => {
-        this.album = data;
-        this.artist = JSON.parse(JSON.stringify(this.album.artist));
-        this._songService.getSongs(this.token, this.album._id).subscribe((data: any) => {
-          this.songs = data;
-        })
-      })
-    })
+  cargarLista(){
+    if(this.searchoption == "songs"){
+      this.loadSongs();
+    }else{
+      this.getAlbums();
+    }
+  }
+
+  loadSongs() {
+    this._songService.getSongs(this.token, "").subscribe((data: any) => {
+      this.songs = data;
+    });
+  }
+
+  doFilter(): void {
+    this.nombre = this.nombre.toLowerCase();
+    if (this.nombre != "" && this.searchoption == "songs") {
+      this.songs = this.songs.filter(x => x.name.toLowerCase().includes(this.nombre));
+    }
+    if (this.nombre != "" && this.searchoption == "albums") {
+      this.albums = this.albums.filter(x => x.title.toLowerCase().includes(this.nombre));
+    }
+    if (this.nombre == "" && this.searchoption == "songs") {
+      this.loadSongs();
+    }
+    else if (this.nombre == "" && this.searchoption == "albums") {
+      this.getAlbums();
+    }
+  }
+
+  getAlbums() {
+    this._albumService.getAlbums(this.token, "").subscribe((data: any) => {
+      this.albums = data;
+    });
   }
 
   onDeleteConfirm(id: string) {

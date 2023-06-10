@@ -1,4 +1,14 @@
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+            <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+            <li class="breadcrumb-spotify-item"><a [routerLink]="['/artists', 1]">Artistas</a></li>
+            <li class="breadcrumb-spotify-item"><a href="#">{{artist.name}}</a></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
     <div *ngIf="artist" class="artist-box">
         <div class="artist-head-card">
             <div class="row">
@@ -10,8 +20,6 @@
                 <div class="col-xl-8 col-lg-8 col-md-7 col-xs-2 col-sm-5">
                     <h2>{{artist.name}}</h2>
                     <p class="description">{{artist.description}}</p>
-                    <a *ngIf="identity.role == 'ROLE_ADMIN'" [routerLink]="['/add-album', artist._id]"
-                        class="btn btn-default">Añadir álbum</a>
                 </div>
             </div>
         </div>
@@ -21,23 +29,31 @@
             <ul class="albums-list">
                 <h5>Discografía</h5>
                 <li *ngFor="let album of albums" class="col-lg-4 album-item" style="margin: 6px;">
-                    <a class="btn btn-default" [routerLink]="['/album', album._id]">{{album.title}}</a>
-                    <div class="pic">
-                        <img src="{{urlAWS + album.image}}" class="card-img-top" id="imagen" alt="">
-                    </div>
-                    <div *ngIf="identity.role == 'ROLE_ADMIN'" class="edicion">
-                        <a class="btn btn-default" [routerLink]="['/edit-album', album._id]">
-                            Editar
-                        </a>
-                        <a class="btn btn-default" (click)="onDeleteConfirm(album._id)">Borrar</a><br>
+                    <div class="card card-spotify" style="width: 18rem;">
+                        <img src="{{urlAWS + album.image}}" alt="Imagen del álbum">
+                        <div class="card-body">
+                            <h5 class="card-title album-name"><a id="enlace-artist-detail"
+                                    [routerLink]="['/album', album._id]">{{album.title}}</a></h5>
+                            <p class="card-text artist-name">{{artist.name}}</p>
+                            <div *ngIf="identity.role == 'ROLE_ADMIN'" class="edicion">
+                                <a class="btn btn-default" [routerLink]="['/edit-album', album._id]">
+                                    Editar
+                                </a>
+                                <a class="btn btn-default" (click)="onDeleteConfirm(album._id)">Borrar</a><br>
 
-                        <div class="seguro" *ngIf="confirmado == album._id">
-                            <a class="btn btn-danger" (click)="onDeleteAlbum(album._id)">ELIMINAR </a>
-                            <a class="btn btn-default" (click)="onCancelAlbum(album._id)">Cancelar</a><br>
+                                <div class="seguro" *ngIf="confirmado == album._id">
+                                    <a class="btn-spotify-danger" (click)="onDeleteAlbum(album._id)">ELIMINAR </a>
+                                    <a class="btn btn-default" (click)="onCancelAlbum(album._id)">Cancelar</a><br>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+
                 </li>
             </ul>
+            <a *ngIf="identity.role == 'ROLE_ADMIN'" [routerLink]="['/add-album', artist._id]"
+                class="btn btn-default">Añadir álbum</a>
         </div>
     </div>
 </div>

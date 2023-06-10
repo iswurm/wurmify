@@ -1,0 +1,70 @@
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/songs']">Biblioteca</a></li>
+        </ol>
+      </nav>
+</div>
+
+<div class="artist-box">
+
+    <div class="search-bar" style="margin-bottom: 4em;">
+        <div class="input-group">
+            <div class="form-outline" style="width: 60%;">
+              <input type="text" [(ngModel)]="nombre" name="filtro" ngDefaultControl (keyup)="doFilter()" class="form-control" placeholder="¿Qué te apetece escuchar?" />
+            </div>
+            <button type="button" class="btn btn-default"><i class="bi bi-search"></i></button>
+            <select class="form-select" id="searchoption" [(ngModel)]="searchoption" name="searchoption" (change)="cargarLista()">
+                <option value="songs">Canciones</option>
+                <option value="albums">Álbum</option>
+              </select>
+          </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+
+    <div class="songs-list" *ngIf="searchoption == 'songs' || searchoption == ''">
+        <ul *ngFor="let song of songs">
+            <li>
+                <div class="row" style="margin-bottom: 8px;">
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-xs-6 col-sm-5" style="
+                        display: flex;">
+                        <span style="margin-top: auto; margin-bottom: auto;">{{song.name}}</span>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-6 col-md-1 col-xs-1 col-sm-2">
+                        <a (click)="startPlayer(song)" class="btn btn-default">
+                            <i class="bi bi-play-fill" id="masterPlay"></i>
+                        </a>
+                    </div>
+                    <div class="col-xl-4 col-lg-3 col-md-4 col-xs-1 col-sm-1">
+                        <a [routerLink]="['/edit-song', song._id]" class="btn btn-default">Editar</a>
+                        <a class="btn btn-default" (click)="onDeleteConfirm(song._id)">Borrar</a>
+                        <div class="seguro" *ngIf="confirmado == song._id">
+                            <a class="btn-spotify-danger" (click)="onDeleteSong(song._id)">ELIMINAR </a>
+                            <a class="btn btn-default" (click)="onCancelSong(song._id)">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="albums-list" *ngIf="searchoption == 'albums'">
+        <ul *ngFor="let album of albums">
+            <li>
+                <div class="row" style="margin-bottom: 8px;">
+                    <div class="col-xl-3 col-lg-3 col-md-5 col-xs-6 col-sm-5" style="
+                        display: flex;">
+                        <span style="margin-top: auto; margin-bottom: auto;">{{album.title}}</span>
+                    </div>
+                    <div class="col-xl-4 col-lg-3 col-md-4 col-xs-1 col-sm-1">
+                        <a [routerLink]="['/album', album._id]" class="btn btn-default">Detalles</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

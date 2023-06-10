@@ -21,6 +21,8 @@ export class SongAddComponent {
   public song: Song;
   public identity: any;
   public token: any;
+  public albums: Album[];
+  public songs: Song[];
   public filesToUpload: Array<File> = [];
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
@@ -29,33 +31,40 @@ export class SongAddComponent {
     private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UserServiceService, private _artistService: ArtistService, private _albumService: AlbumService, private _songService: SongService) {
-    this.titulo = 'New Album';
+    this.titulo = 'Nueva canción';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.artist = new Artist('', '', '', '');
     this.album = new Album('', '', '', 0, '', '');
-    this.song = new Song('', '', '', 0, '', '');
+    this.song = new Song('', '', '', 0, '', ''); 
+    this.albums = [];
+    this.songs = [];
   }
 
   ngOnInit() {
     this.getAlbum();
   }
 
-  getAlbum(){
+  getAlbum() {
     this._route.params.forEach((params: Params) => {
-      let id = params['id'];
-      this._albumService.getAlbum(this.token, id).subscribe((data: any)=>{
+      let id = params['album'];
+      this._albumService.getAlbum(this.token, id).subscribe((data: any) => {
         this.album = data;
+        this.artist = JSON.parse(JSON.stringify(this.album.artist));
+        this._songService.getSongs(this.token, this.album._id).subscribe((data: any) => {
+          this.songs = data;
+        })
       })
     })
   }
+
 
   onSubmit() {
     this._route.params.forEach((params: Params) => {
       let albumId = params['album'];
       this.song.album = albumId;
       this._songService.addSong(this.token, this.song).subscribe((data: any) => {
-        console.log(data);
+        this._router.navigate(['edit-song/'+data.status._id]);
       });
     })
   }

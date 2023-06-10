@@ -46,7 +46,7 @@ export class AlbumService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    if(artistId == null){
+    if(artistId == ""){
       return this.http.get(this.apiRestUrl+'albums/', headers);
     }else{
       return this.http.get(this.apiRestUrl+'albums/'+artistId, headers);

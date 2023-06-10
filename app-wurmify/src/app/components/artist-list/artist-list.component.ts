@@ -75,7 +75,7 @@ import { Observable } from 'rxjs';
 
 
     onDeleteArtist(id: string){
-      alert("BU");
       this._artistService.deleteArtist(this.token, id).subscribe();
+      this._router.navigate(['/']);
     }
   }

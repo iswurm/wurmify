@@ -58,9 +58,8 @@ export class ArtistDetailComponent {
     this.confirmado = "";
   }
 
-
   onDeleteAlbum(id: string){
-    alert("BU");
     this._albumService.deleteAlbum(this.token, id).subscribe();
+    this._router.navigate(['/']);
   }
 }

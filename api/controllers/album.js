@@ -10,7 +10,8 @@ var Song = require('../models/song');
 const mongoose = require('mongoose');
 const artistas = mongoose.model('Artist');
 const albumes = mongoose.model('Album');
-const canciones = mongoose.model('Song'); const AWS = require('aws-sdk');
+const canciones = mongoose.model('Song'); 
+const AWS = require('aws-sdk');
 AWS.config.update({
     accessKeyId: 'AKIAU727EPNRDMRYWXPS',
     secretAccessKey: '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'
@@ -131,8 +132,8 @@ async function updateAlbum(req, res) {
 async function deleteAlbum(req, res) {
     var albumId = req.params.id;
     try {
-        const albumBorrado = await albumes.findOneAndRemove({ albumId });
-        const cancionesBorradas = await canciones.findOneAndDelete({ album: albumId });
+        await albumes.findOneAndRemove({ albumId });
+        await canciones.deleteMany({ album: albumId });
         return res.status(200).send("BORRADO CON EXITO!");
     } catch (error) {
         return res.status(400).send({

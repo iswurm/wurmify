@@ -1,6 +1,15 @@
 <div class="row">
-    <h1>{{titulo}}</h1>
-    <h1>{{artist.name}}</h1>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a >{{song.name}}</a></li>
+          <li class="breadcrumb-spotify-item"><a >Editar canción</a></li>
+        </ol>
+      </nav>
+</div>
+
+<div class="row">
+    <h1>Actualizar {{song.name}}</h1>
 
     <div class="formSong">
         <form #formSong="ngForm" (submit)="onSubmit()" class="col-md-10">
@@ -37,7 +46,7 @@
                 <input type="file" name="image" placeholder="Upload an artist picture"
                     (change)="fileChangeEvent($event)">
             </div>
-            <input type="submit" value="Update song" class="btn btn-primary" [disabled]="!formSong.form.valid">
+            <input type="submit" value="Update song" class="btn-spotify" [disabled]="!formSong.form.valid">
         </form>
     </div>
 </div>

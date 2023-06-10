@@ -1,5 +1,13 @@
-<h1>{{titulo}}</h1>
-<h1>{{artist.name}}</h1>
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artists', 1]">Artistas</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artist', artist._id]">{{artist.name}}</a></li>
+          <li class="breadcrumb-spotify-item"><a href="#">Añadir álbum</a></li>
+        </ol>
+      </nav>
+</div>
 
 <div class="row">
     <div class="col-lg-1"></div>
@@ -34,7 +42,7 @@
                 </div>
                 <input type="file" name="image" placeholder="Upload an album picture" (change)="fileChangeEvent($event)">
             </div>
-            <input type="submit" value="Create Album" class="btn btn-primary" [disabled]="!formAlbum.form.valid">
+            <input type="submit" value="Create Album" class="btn-spotify" [disabled]="!formAlbum.form.valid">
         </form>
     </div>
     <div class="col-lg-1"></div>

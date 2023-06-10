@@ -1,9 +1,15 @@
+<div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artists', 1]">Artistas</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/artist', artist._id]">{{artist.name}}</a></li>
+          <li class="breadcrumb-spotify-item"><a href="#">{{album.title}}</a></li>
+        </ol>
+      </nav>
+</div>
+
 <div *ngIf="artist" class="artist-box">
-    <div class="artist-head-card">
-        <div *ngIf="artist.image" class="image-artist">
-            <img src="{{url + 'get-image-artist/' + artist.image}}" alt="">
-        </div>
-    </div>
 
     <div class="clearfix"></div>
     <div class="album" *ngIf="album">
@@ -40,7 +46,7 @@
                             <a [routerLink]="['/edit-song', song._id]" class="btn btn-default">Editar</a>
                             <a class="btn btn-default" (click)="onDeleteConfirm(song._id)">Borrar</a>
                             <div class="seguro" *ngIf="confirmado == song._id">
-                                <a class="btn btn-danger" (click)="onDeleteSong(song._id)">ELIMINAR </a>
+                                <a class="btn-spotify-danger" (click)="onDeleteSong(song._id)">ELIMINAR </a>
                                 <a class="btn btn-default" (click)="onCancelSong(song._id)">Cancelar</a>
                             </div>
                         </div>

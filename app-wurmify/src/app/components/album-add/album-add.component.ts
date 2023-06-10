@@ -39,10 +39,9 @@ export class AlbumAddComponent {
 
   getArtist(){
     this._route.params.forEach((params: Params) => {
-      let id = params['id'];
-      this._artistService.getArtist(this.token, id).subscribe((data: any)=>{
+      let artistId = params['artist'];
+      this._artistService.getArtist(this.token, artistId).subscribe((data: any)=>{
         this.artist = data.artist;
-        console.log(this.artist);
       })
     })
   }
@@ -54,7 +53,7 @@ export class AlbumAddComponent {
     })
     console.log(this.album);
     this._albumService.addAlbum(this.token, this.album).subscribe((data: any)=>{
-      //this._router.navigate(['edit-artist/'+data.status._id]);
+      this._router.navigate(['edit-album/'+data.status._id]);
     });
   }
 

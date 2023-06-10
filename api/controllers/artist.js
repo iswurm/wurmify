@@ -186,8 +186,8 @@ async function deleteArtist(req, res) {
   var artistId = req.params.id;
   try {
     await artistas.findOneAndRemove({ _id: artistId });
-    await albumes.findOneAndRemove({ artist: artistId });
-    await canciones.findOneAndRemove({ album: artistId });
+    await albumes.deleteMany({ artist: artistId });
+    await canciones.deleteMany({ album: artistId });
     //await Song.findOneAndRemove(songId, (err, songRemoved) => {...});
     //return res.status(200).send("Borrado de album con éxito");    
   } catch (error) {

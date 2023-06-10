@@ -14,8 +14,23 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+.navbar-spotify {
+    background-color: #131312;
+}
 
-#enlaces-menu {}
+.navbar-spotify .navbar-brand {
+    color: #1DB954;
+    font-weight: bold;
+}
+
+.navbar-spotify .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-spotify .navbar-nav .nav-link:hover,
+.navbar-spotify .navbar-nav .nav-link:focus {
+    color: #1DB954;
+}
 
 .topnav {
     overflow: hidden;
@@ -108,7 +123,7 @@ body {
 }
 
 #enlace-titulo a:hover {
-    color: rgb(90, 90, 90);
+    color: #1DB954;
 }
 
 
@@ -152,8 +167,10 @@ body {
 }
 
 #imagen-perfil-navbar {
+    margin-left: 2em;
     width: 5%;
     height: auto;
+    border-radius:150px;
 }
 
 #div-imagen-player {
@@ -177,31 +194,36 @@ ul {
 @media (max-width: 767px) {
     .card {
         width: 100%;
-      }
+    }
+
     .card-img-top {
         width: 100%;
         height: auto;
+        object-fit: cover;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
     .card {
         width: 50%;
-      }
+    }
+
     .card-img-top {
-        width: 50%;
+        width: 100%;
         height: auto;
+        object-fit: cover;
     }
 }
 
 @media (min-width: 992px) {
     .card {
         width: 33.33%;
-      }
-      
+    }
+
     .card-img-top {
         width: 100%;
-        height: 100%;
+        height: auto;
+        object-fit: cover;
     }
 }
 
@@ -214,6 +236,7 @@ ul {
         height: auto;
         margin: 1em;
     }
+
     #card {
         margin: 1em;
     }
@@ -221,9 +244,11 @@ ul {
 
 @media (min-width: 768px) and (max-width: 991px) {
     .card {
-        width: 50%;
+        width: 100%;
         height: auto;
+        margin: 1em;
     }
+
     #card {
         margin: 1em;
     }
@@ -272,7 +297,6 @@ ul {
 
 .list-group-item {
     background-color: #1c1c1b;
-    height: 4rem;
     border: none;
     color: #f2f2f2;
 }
@@ -282,9 +306,237 @@ ul {
 }
 
 #card {
-    margin:0px auto
+    margin: 0px auto
 }
 
 .btn {
     color: #acacac;
+}
+
+.contenerdor-img-card {
+    height: 12rem;
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo general para los botones */
+.btn-spotify {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #1db954;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo al pasar el mouse por encima del botón */
+.btn-spotify:hover {
+    background-color: #1ed760;
+}
+
+/* Estilo cuando el botón está presionado */
+.btn-spotify:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para un botón más pequeño */
+.btn-spotify-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* Estilo general para los botones de danger */
+.btn-spotify-danger {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #b91d1d;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+/* Estilo al pasar el mouse por encima del botón */
+.btn-spotify-danger:hover {
+    background-color: #d7241e;
+}
+
+/* Estilo cuando el botón está presionado */
+.btn-spotify-danger:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para un botón más pequeño */
+.btn-spotify-danger-sm {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+/* ESTILOS PARA EL CAMINO DE MIGAS */
+.breadcrumb-spotify {
+    padding: 8px 15px;
+    margin-bottom: 20px;
+    list-style: none;
+    background-color: #282828;
+    border-radius: 30px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb-spotify-item {
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+  }
+
+  .breadcrumb-spotify-item:not(:last-child)::after {
+    content: "/";
+    margin: 0 10px;
+    color: #888888;
+  }
+
+  .breadcrumb-spotify-item a,
+  .breadcrumb-spotify-item a:hover {
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  @media (max-width: 576px) {
+    .breadcrumb-spotify-item:not(:last-child)::after {
+      content: none;
+    }
+
+    .breadcrumb-spotify-item a {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /*ESTILOS PARA EL REPRODUCTOR*/
+
+  .reproductor-spotify {
+    background-color: #282828;
+    border-radius: 30px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .reproductor-spotify .info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  .reproductor-spotify .artista {
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 5px;
+  }
+
+  .reproductor-spotify .cancion {
+    color: #ffffff;
+  }
+
+  .reproductor-spotify .imagen-cancion {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+
+  .reproductor-spotify audio {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .reproductor-spotify .controles {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .reproductor-spotify .controles button {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .reproductor-spotify .controles button:hover {
+    color: #1db954;
+  }
+
+  @media (max-width: 576px) {
+    .reproductor-spotify {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .reproductor-spotify .info {
+      margin-bottom: 20px;
+    }
+  }
+
+
+  /*ESTILOS PARA ARTIST DETAIL*/
+  .card-spotify {
+    border: none;
+    border-radius: 10px;
+    background-color: #282828;
+    color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .card-spotify:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-spotify img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+
+  .card-spotify .card-body {
+    padding: 20px;
+  }
+
+  .card-spotify .album-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .card-spotify .artist-name {
+    font-size: 14px;
+    color: #888888;
+  }
+
+  #enlace-artist-detail {
+    color: #fff;
+}
+
+#enlace-artist-detail:hover,
+#enlace-artist-detail:focus {
+    color: #1DB954;
 }

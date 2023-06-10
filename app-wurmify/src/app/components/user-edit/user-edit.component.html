@@ -1,10 +1,19 @@
 <div class="row">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-spotify">
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/']">Inicio</a></li>
+          <li class="breadcrumb-spotify-item"><a [routerLink]="['/mis-datos']">{{identity.name}}</a></li>
+        </ol>
+      </nav>
+</div>
+
+<div class="row">
     <div class="col-lg-6" *ngIf="identity">
-        <h2>Update User</h2>
+        <h2>Actualiza tus datos</h2>
         
         <span id="identity_name">Bienvenido, {{identity.name}} </span><span id="">{{identity.surname}}</span><br>
         <span id="">{{identity.email}}</span><br>
-        <img src="{{urlAWS + user.image}}"/><br>
+        <img src="{{urlAWS + user.image}}" class="card-img-top" id="imagen-artista"/><br>
 
         <form #updateForm="ngForm" (submit)="onSubmit()" class="col-md-10">
             <p>
@@ -29,7 +38,7 @@
                 <label for="">Profile pic: </label>
                 <input type="file" name="image" placeholder="Upload your profile picture" (change)="fileChangeEvent($event)">
             </p>
-            <input type="submit" value="Actualizar usuario" class="btn btn-default">
+            <input type="submit" value="Actualizar usuario" class="btn btn-spotify">
         </form>
     </div>
 </div>

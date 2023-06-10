@@ -3,11 +3,11 @@
     <h1 class="text-body-emphasis">{{titulo}}</h1>
     <p class="col-lg-8 mx-auto lead">
       <span id="spanNegro">
-        Empieza a escuchar música de tus artistas favoritos y descubre nuevos hits</span>
+        Empieza a escuchar música de tus artistas favoritos y descubre nuevos hits.</span>
     </p>
     <div class="enlaces-menu">
-      <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']" >Artistas <span class="glyphicon glyphicon-cog"
-          aria-hidden="true"></span> </a>
+      <span style="margin: 2em;"><a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']" class="btn-spotify">Artistas </a></span>
+      <span style="margin: 2em;"><a [routerLink]="['/songs']" [routerLinkActive]="['actived']" class="btn-spotify">Biblioteca</a></span>
     </div>
   </div>
 </div>

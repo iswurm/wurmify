@@ -1,21 +1,14 @@
 <div class="row fixed-bottom" id="player-contenedor">
-    <div class="col-1 col-md-1 col-lg-1 col-sm-1 col-xl-1" id="div-imagen-player">
-        <div class="album-image">
-            <img alt="Imagen del álbum" src="{{urlAWS + album.image}}" *ngIf="song.album" id="img-player">
-        </div>
-    </div>
 
-    <div class="col-11 col-md-11 col-lg-11 col-sm-11 col-xl-11">
-        <div class="cancion">
-            <span id="player-song-name">{{song.name}}</span><br>
-            <span id="player-song-artist">{{artist.name}}</span>
-        </div>
-        
-        <div class="song">
-            <audio controls id="player">
-                <source src="{{urlAWS + song.file}}" id="mp3-source" type="audio/mpeg">
-            </audio>
-        </div>
-    </div>
 
+    <div class="reproductor-spotify">
+        <img src="{{urlAWS + album.image}}" alt="Imagen de la canción" id="imagen-reproductor" class="imagen-cancion">
+        <div class="info">
+          <div class="artista" id="player-song-name">{{song.name}}</div>
+          <div class="cancion" id="player-artist-name">{{artist.name}}</div>
+          <audio controls id="player">
+            <source src="{{urlAWS + song.file}}" id="mp3-source" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
 </div>

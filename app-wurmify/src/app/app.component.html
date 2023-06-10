@@ -1,30 +1,43 @@
-<div class="row">
-    <div class="col-lg-1"></div>
-    <div *ngIf="identity || token" class="navigation col-lg-10 col-md-8 col-sm-10">
-        <h1 class="head-title">
-            <span id="enlace-titulo"><a [routerLink]="['/']">{{title}}</a></span>
-
-        </h1>
-
-        <nav id="userLogged" class="menu_side">
-            <div class="row">
-                <div id="enlaces-menu">
-                    <div class="topnav" id="myTopnav">
-                        <img src="{{urlAWS + identity.image}}" id="imagen-perfil-navbar"/>
-                        <a (click)="logout()"><i class="bi bi-box-arrow-left"></i></a>
-                        <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']"><i
-                                class="bi bi-gear-fill"></i></a>
-                        <a [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">Artistas </a>
-                        <a [routerLink]="['/']"><i class="bi bi-house-fill"></i></a>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <router-outlet></router-outlet>
-        </nav>
+<nav class="navbar navbar-expand-lg navbar-spotify" *ngIf="token">
+    <h1 class="head-title">
+        <span id="enlace-titulo"><a [routerLink]="['/']">{{title}}</a></span>
+    </h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a [routerLink]="['/mis-datos']" [routerLinkActive]="['actived']"><img src="{{urlAWS + identity.image}}"
+                        id="imagen-perfil-navbar" /></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">Artistas </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/songs']" [routerLinkActive]="['actived']">Biblioteca</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="logout()"><i class="bi bi-box-arrow-left"></i></a>
+            </li>
+        </ul>
     </div>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-spotify" *ngIf="!token">
+    <h1 class="head-title">
+        <span id="enlace-titulo"><a [routerLink]="['/']">{{title}}</a></span>
+    </h1>
+</nav>
+
+
+
+<div class="row" *ngIf="token">
+    <router-outlet></router-outlet>
 </div>
 
 <div class="row" *ngIf="!token">
@@ -48,7 +61,7 @@
                 <input type="password" #password="ngModel" name="password" [(ngModel)]="user.password"
                     class="form-control" required>
             </p>
-            <input type="submit" value="LogIn" class="btn btn-primary">
+            <input type="submit" value="Iniciar sesión" class="btn-spotify">
         </form>
     </div>
 </div>
@@ -89,17 +102,13 @@
                     La contraseña es obligatoria
                 </span>
             </p>
-            <input type="submit" value="LogIn" class="btn btn-primary">
+            <input type="submit" value="Registrarse" class="btn-spotify">
         </form>
     </div>
 </div>
 
 <div class="row" *ngIf="token">
-    <div class="col-lg-2">
-    </div>
-    <div class="col-lg-8">
-        <app-player></app-player>
-    </div>
+    <app-player></app-player>
 </div>
 
 <!-- Remove the container if you want to extend the Footer to full width. -->
@@ -136,9 +145,6 @@
                             style="width: 60px; background-color: #7c4dff; height: 2px" />
                         <p>
                             <a href="#!" class="text-white">MDBootstrap</a>
-                        </p>
-                        <p>
-                            <a href="#!" class="text-white">MDWordPress</a>
                         </p>
                         <p>
                             <a href="#!" class="text-white">BrandFlow</a>
