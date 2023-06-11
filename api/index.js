@@ -13,10 +13,11 @@ const options = {
 };
 
 const uri = process.env.MONGODB_URI;
+const uriLocal = "mongodb://localhost:27017";
 
 let connectWithRetry = function () {
   mongoose.Promise = global.Promise;
-  return mongoose.connect(uri, options).then(() => {
+  return mongoose.connect(uriLocal, options).then(() => {
     app.listen(port, function () {
       console.log("Está funcionando");
     })
