@@ -4,7 +4,7 @@
   "description": "Servicio de retransmision de musica via streaming",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "author": "ignacio",
   "license": "ISC",
@@ -21,8 +21,5 @@
     "mongoose": "^7.0.3",
     "mongoose-pagination": "^1.0.0",
     "nvm": "^0.0.4"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
   }
 }
