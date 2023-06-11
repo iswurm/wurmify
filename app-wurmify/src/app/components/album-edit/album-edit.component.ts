@@ -23,6 +23,7 @@ export class AlbumEditComponent {
   public albums: Album[];
   public songs: Song[];
   public filesToUpload: Array<File> = [];
+  public apiProdUrl: String = 'https://wurmify.onrender.com/api/';
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
 
@@ -54,7 +55,7 @@ export class AlbumEditComponent {
           if(this.filesToUpload.length < 1){
             this._router.navigate(['/artists', 1]);
           }else{
-            this.makeFileRequest(this.url+'upload-image-album/'+id, [], this.filesToUpload, this.token, "image").then(
+            this.makeFileRequest(this.apiProdUrl+'upload-image-album/'+id, [], this.filesToUpload, this.token, "image").then(
               (result: any) =>{
                 this.album.image = result.image;
                 this._router.navigate(['/artists', 1]);

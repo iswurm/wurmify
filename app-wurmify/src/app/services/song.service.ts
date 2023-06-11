@@ -12,6 +12,7 @@ import { Song } from '../models/song';
 })
 export class SongService {
 
+  private apiProdUrl = 'https://wurmify.onrender.com/api/';
   private apiRestUrl = 'http://localhost:3977/api/';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
@@ -30,7 +31,7 @@ export class SongService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.post(this.apiRestUrl+'song', params, headers);
+    return this.http.post(this.apiProdUrl+'song', params, headers);
   }
 
   getSong(token: any, id: string){
@@ -38,7 +39,7 @@ export class SongService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.get(this.apiRestUrl+'song/'+id, headers);
+    return this.http.get(this.apiProdUrl+'song/'+id, headers);
   }
 
   getSongs(token: any, albumId: string){
@@ -47,9 +48,9 @@ export class SongService {
       'authorization': token })
     }
     if(albumId == ""){
-      return this.http.get(this.apiRestUrl+'songs/', headers);
+      return this.http.get(this.apiProdUrl+'songs/', headers);
     }else{
-      return this.http.get(this.apiRestUrl+'songs/'+albumId, headers);
+      return this.http.get(this.apiProdUrl+'songs/'+albumId, headers);
     }
   }
 
@@ -59,7 +60,7 @@ export class SongService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.delete(this.apiRestUrl+'song/'+id, headers);
+    return this.http.delete(this.apiProdUrl+'song/'+id, headers);
   }
 
   editSong(token: any, id: string, song: Song){
@@ -68,6 +69,6 @@ export class SongService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.put(this.apiRestUrl+'update-song/'+id, params, headers);
+    return this.http.put(this.apiProdUrl+'update-song/'+id, params, headers);
   }
 }

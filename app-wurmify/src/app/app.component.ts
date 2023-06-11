@@ -16,6 +16,7 @@ export class AppComponent{
   public userRegister: User;
   public identity: any;
   public token: any;
+  private apiProdUrl = 'https://wurmify.onrender.com/api/';
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
   

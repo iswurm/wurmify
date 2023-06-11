@@ -11,7 +11,7 @@ import { Album } from '../models/album';
 })
 export class AlbumService {
 
-
+  private apiProdUrl = 'https://wurmify.onrender.com/api/';
   private apiRestUrl = 'http://localhost:3977/api/';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
@@ -30,7 +30,7 @@ export class AlbumService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.post(this.apiRestUrl+'album', params, headers);
+    return this.http.post(this.apiProdUrl+'album', params, headers);
   }
 
   getAlbum(token: any, id: string){
@@ -38,7 +38,7 @@ export class AlbumService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.get(this.apiRestUrl+'album/'+id, headers);
+    return this.http.get(this.apiProdUrl+'album/'+id, headers);
   }
 
   getAlbums(token: any, artistId: string){
@@ -47,9 +47,9 @@ export class AlbumService {
       'authorization': token })
     }
     if(artistId == ""){
-      return this.http.get(this.apiRestUrl+'albums/', headers);
+      return this.http.get(this.apiProdUrl+'albums/', headers);
     }else{
-      return this.http.get(this.apiRestUrl+'albums/'+artistId, headers);
+      return this.http.get(this.apiProdUrl+'albums/'+artistId, headers);
     }
   }
 

@@ -16,6 +16,7 @@ export class ArtistEditComponent {
   public identity: any;
   public token: any;
   public filesToUpload: Array<File> = [];
+  public apiProdUrl: String = 'https://wurmify.onrender.com/api/';
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
   
@@ -50,7 +51,7 @@ export class ArtistEditComponent {
         if(!this.filesToUpload){
           alert("no hay imagen");
         }else{
-          this.makeFileRequest(this.url+'upload-image-artist/'+id, [], this.filesToUpload, this.token, "image").then(
+          this.makeFileRequest(this.apiProdUrl+'upload-image-artist/'+id, [], this.filesToUpload, this.token, "image").then(
             (result: any) =>{
               this.artist.image = result.image;
               this._router.navigate(['/artists', 1]);

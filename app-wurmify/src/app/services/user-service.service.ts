@@ -10,6 +10,7 @@ import { User } from '../models/user';
 })
 export class UserServiceService {
 
+  private apiProdUrl = 'https://wurmify.onrender.com/api/';
   private apiRestUrl = 'http://localhost:3977/api/';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
@@ -25,12 +26,12 @@ export class UserServiceService {
       user.gethash = gethash;
     }
     let params = JSON.stringify(user);
-    return this.http.post(this.apiRestUrl + 'login', params, this.httpOptions);
+    return this.http.post(this.apiProdUrl + 'login', params, this.httpOptions);
   }
 
   register(userToRegister: any){
     let params = JSON.stringify(userToRegister);
-    return this.http.post(this.apiRestUrl + 'register', params, this.httpOptions);
+    return this.http.post(this.apiProdUrl + 'register', params, this.httpOptions);
   }
 
 
@@ -41,7 +42,7 @@ export class UserServiceService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': this.token })
     }
-    return this.http.put(this.apiRestUrl + 'update-user/' + userToUpdate._id, params, headers);
+    return this.http.put(this.apiProdUrl + 'update-user/' + userToUpdate._id, params, headers);
   }
 
   getIdentity() {

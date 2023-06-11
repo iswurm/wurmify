@@ -22,6 +22,7 @@ export class SongEditComponent {
   public identity: any;
   public token: any;
   public filesToUpload: Array<File> = [];
+  public apiProdUrl: String = 'https://wurmify.onrender.com/api/';
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
 
@@ -61,7 +62,7 @@ export class SongEditComponent {
           if (this.filesToUpload.length < 1) {
             this._router.navigate(['/artists', 1]);
           } else {
-            this.makeFileRequest(this.url + 'upload-song-file/' + songId, [], this.filesToUpload, this.token, "song").then(
+            this.makeFileRequest(this.apiProdUrl + 'upload-song-file/' + songId, [], this.filesToUpload, this.token, "song").then(
               (result: any) => {
                 this.song.file = result;
                 console.log(result);

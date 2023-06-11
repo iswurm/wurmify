@@ -11,6 +11,7 @@ import { Artist } from '../models/artist';
 export class ArtistService {
 
 
+  private apiProdUrl = 'https://wurmify.onrender.com/api/';
   private apiRestUrl = 'http://localhost:3977/api/';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'})
@@ -27,7 +28,7 @@ export class ArtistService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.get(this.apiRestUrl+'artists/'+page, headers);
+    return this.http.get(this.apiProdUrl+'artists/'+page, headers);
   }
 
   getArtist(token: any, id: string){
@@ -35,7 +36,7 @@ export class ArtistService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.get(this.apiRestUrl+'artist/'+id, headers);
+    return this.http.get(this.apiProdUrl+'artist/'+id, headers);
   }
 
   editArtist(token: any, id: string, artist: Artist){
@@ -44,7 +45,7 @@ export class ArtistService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.put(this.apiRestUrl+'update-artist/'+id, params, headers);
+    return this.http.put(this.apiProdUrl+'update-artist/'+id, params, headers);
   }
 
   addArtist(token: any, artist: Artist){
@@ -53,7 +54,7 @@ export class ArtistService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.post(this.apiRestUrl+'artist', params, headers);
+    return this.http.post(this.apiProdUrl+'artist', params, headers);
   }
 
   deleteArtist(token: any, id: string){
@@ -61,7 +62,7 @@ export class ArtistService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*',
       'authorization': token })
     }
-    return this.http.delete(this.apiRestUrl+'artist/'+id, headers);
+    return this.http.delete(this.apiProdUrl+'artist/'+id, headers);
   }
 
 }

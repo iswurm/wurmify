@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
     public artists: Artist[] = [];
     public identity: any;
     public token: any;
+    public apiProdUrl: String = 'https://wurmify.onrender.com/api/';
     public url: String = 'http://localhost:3977/api/';
     public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
     public next_page: any;

@@ -15,6 +15,7 @@ export class UserEditComponent {
   public identity: any;
   public token: any;
   public filesToUpload: Array<File> = [];
+  public apiProdUrl: String = 'https://wurmify.onrender.com/api/';
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
 
@@ -43,7 +44,7 @@ export class UserEditComponent {
         if (this.filesToUpload.length < 1) {
           this._router.navigate(['/artists', 1]);
         } else {
-          this.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
+          this.makeFileRequest(this.apiProdUrl + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
             (result: any) => {
               this.user.image = result;
               this._router.navigate(['/artists', 1]);
