@@ -4,7 +4,8 @@
   "description": "Servicio de retransmision de musica via streaming",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "npm i"
   },
   "author": "ignacio",
   "license": "ISC",
