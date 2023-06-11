@@ -29,7 +29,7 @@ import { Observable } from 'rxjs';
         private _router: Router,
         private _userService: UserServiceService,
         private _artistService: ArtistService){
-            this.titulo = 'Artists';
+            this.titulo = 'Artistas';
             this.identity = this._userService.getIdentity();
             this.token = this._userService.getToken();
             this.next_page = 1;
@@ -60,7 +60,6 @@ import { Observable } from 'rxjs';
             this._router.navigate(['/']);
           }else{
             this.artists = response.artists;
-            console.log(this.artists);
           }
         })
       })

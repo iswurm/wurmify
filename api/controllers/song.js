@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').config();
 var path = require('path');
 var fs = require('fs');
 var mongoosePagination = require('mongoose-pagination');
@@ -14,9 +15,9 @@ const songs = mongoose.model('Song');
 
 const AWS = require('aws-sdk');
 AWS.config.update({
-    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
-    secretAccessKey: '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'
-  });
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
+});
 const s3 = new AWS.S3();
 
 async function pruebas(req, res) {
@@ -37,7 +38,7 @@ async function saveSong(req, res) {
         //save
         try {
             const result = await songs.findOne({ 'name': song.name });
-            if(!result){
+            if (!result) {
                 await new songs(song).save();
                 return res.send({
                     status: song
@@ -112,7 +113,7 @@ async function updateSong(req, res) {
         const song = await songs.findByIdAndUpdate(songId, update);
         return res.send({
             song: song
-          });
+        });
     } catch (error) {
         return res.status(400).send({
             status: 'No se ha podido modificar'
@@ -123,7 +124,7 @@ async function updateSong(req, res) {
 async function deleteSong(req, res) {
     var songId = req.params.id;
     try {
-        const song = await songs.findOneAndRemove({ "_id" : songId });
+        const song = await songs.findOneAndRemove({ "_id": songId });
         return res.send({
             song: song
         })
@@ -160,21 +161,21 @@ async function uploadFile(req, res) {
                 const song = await songs.findByIdAndUpdate(songId, { file: fileName });
                 const fileContent = fs.readFileSync(filePath);
                 const params = {
-                  Bucket: 'wurmify',
-                  Key: fileName,
-                  Body: fileContent
+                    Bucket: 'wurmify',
+                    Key: fileName,
+                    Body: fileContent
                 }
                 s3.upload(params, (err, data) => {
-                  if (err) {
-                    console.log("fail");
-                  }else{
-                    console.log(data);
-                  }
-                  
+                    if (err) {
+                        return res.status(400).send({
+                            status: 'No se ha podido subir la imagen'
+                        });
+                    } else {
+                        return res.status(200).send({
+                            status: data.Location
+                        });
+                    }
                 })
-                return res.send({
-                    file: fileName
-                });
             } catch (error) {
                 return res.status(400).send({
                     status: 'No se ha podido modificar la canción'

@@ -1,5 +1,5 @@
 'use strict'
-
+require('dotenv').config();
 var mongoose = require('mongoose');
 var app = require('./app.js');
 var port = process.env.PORT || 3977;
@@ -12,8 +12,7 @@ const options = {
     family: 4 // Use IPv4, skip trying IPv6
   };
 
-const uri = "mongodb+srv://ignaciosanchez9:M1k4tus12023@clusterwurmify.xyd8h0c.mongodb.net/?retryWrites=true&w=majority";
-
+const uri = process.env.MONGODB_URI;
 
 let connectWithRetry= function() {
     mongoose.Promise = global.Promise;
@@ -22,7 +21,7 @@ let connectWithRetry= function() {
           console.log("Está funcionando");
         })
       },
-      err => { console.log("error.....") }
+      err => { console.log("Error de conexión.") }
     );
   };
 

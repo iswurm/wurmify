@@ -43,9 +43,6 @@ export class ArtistDetailComponent {
         this.artist = data.artist;
         this._albumService.getAlbums(this.token, this.artist._id).subscribe((data: any)=>{
           this.albums = data;
-          this.albums.forEach((x: any) =>{
-            console.log(x.artist.name);
-          })
         });
       })
     })

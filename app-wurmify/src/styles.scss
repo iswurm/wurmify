@@ -130,12 +130,11 @@ body {
 /* Estilos reproductor */
 
 #player-contenedor {
-    width: 90%;
     background-color: #131312;
 }
 
 #player {
-    width: 90%;
+    width: 100%;
 }
 
 #player #album-image {
@@ -201,6 +200,7 @@ ul {
         height: auto;
         object-fit: cover;
     }
+    
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -442,6 +442,7 @@ ul {
     flex-direction: column;
     flex: 1;
     margin-right: 20px;
+    width: 100%;
   }
 
   .reproductor-spotify .artista {

@@ -50,16 +50,14 @@ export class AppComponent{
           }
         })
       }
-      let token = data;
       localStorage.setItem('token', data.token);
-      console.log(token);
     });
   }
 
   onSubmitRegister(){
-    console.log(this.userRegister);
     this._userService.register(this.userRegister).subscribe((data)=>{
-      this._router.navigate(['']);
+      alert("¡Usuario registrado con éxito!");
+      this._router.navigate(['/']);
     });
   }
 

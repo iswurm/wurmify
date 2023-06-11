@@ -44,7 +44,6 @@ export class SongListComponent {
   ngOnInit() {
     this.loadSongs();
     this.getAlbums();
-    console.log(this.songs);
   }
 
   cargarLista(){

@@ -49,7 +49,6 @@ export class AlbumEditComponent {
       let id = params['id'];
       this._albumService.editAlbum(this.token, id, this.album).subscribe((data)=>{
         if(this.filesToUpload.length == 0){
-          alert("no hay imagen");
           this._router.navigate(['/artists', 1]);
         }else{
           if(this.filesToUpload.length < 1){
@@ -58,8 +57,6 @@ export class AlbumEditComponent {
             this.makeFileRequest(this.url+'upload-image-album/'+id, [], this.filesToUpload, this.token, "image").then(
               (result: any) =>{
                 this.album.image = result.image;
-                console.log(this.album.title);
-                console.log("IMAGEN: " + result.image);
                 this._router.navigate(['/artists', 1]);
               }
             );

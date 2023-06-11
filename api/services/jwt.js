@@ -1,8 +1,9 @@
 'use strict'
 
+require('dotenv').config();
 var jwt = require('jwt-simple');
 var moment = require('moment');
-var secret = 'M1k4wurmify';
+var secret = process.env.SECRET;
 
 exports.createToken = function(user){
     var payload = {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute, Params} from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { User } from 'src/app/models/user';
@@ -18,62 +18,64 @@ export class UserEditComponent {
   public url: String = 'http://localhost:3977/api/';
   public urlAWS: String = 'https://wurmify.s3.eu-west-3.amazonaws.com/';
 
-  constructor(private _userService:UserServiceService,
+  constructor(private _userService: UserServiceService,
     private _route: ActivatedRoute,
-    private _router: Router,){
+    private _router: Router,) {
     //LocalStorage
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
     this.user = this.identity;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.token = this._userService.getToken();
     this.identity = this._userService.getIdentity();
   }
 
-  onSubmit(){
-    console.log(this.user);
-    this._userService.updateUser(this.user).subscribe((data) =>{
-      console.log(this.filesToUpload);
-      if(this.filesToUpload.length == 0){
+  onSubmit() {
+    this._userService.updateUser(this.user).subscribe((data: any) => {
+      if (this.filesToUpload.length == 0) {
         this.token = this._userService.getToken();
         localStorage.setItem("identity", JSON.stringify(this.user));
         this._router.navigate(['/artists', 1]);
 
-      }else{
-        this.makeFileRequest(this.url+'upload-image-user/'+this.user._id, [], this.filesToUpload).then(
-          (result: any) =>{
-            this.user.image = result.image;
-            localStorage.setItem('identity', JSON.stringify(this.user));
-          }
-        );
+      } else {
+        if (this.filesToUpload.length < 1) {
+          this._router.navigate(['/artists', 1]);
+        } else {
+          this.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
+            (result: any) => {
+              this.user.image = result;
+              this._router.navigate(['/artists', 1]);
+            }
+          );
+        }
       }
     });
   }
 
-  fileChangeEvent(fileInput: any){
+  fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
 
   }
 
-  makeFileRequest(url: string, params: Array<String>, files: Array<File>){
+  makeFileRequest(url: string, params: Array<String>, files: Array<File>) {
     var token = this.token;
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
       var formData: any = new FormData();
       var xhr = new XMLHttpRequest();
-      for(var i = 0; i < files.length; i++){
+      for (var i = 0; i < files.length; i++) {
         formData.append('image', files[i], files[i].name);
       }
 
-      xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4){
-          if(xhr.status == 200){
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
             resolve(JSON.parse(xhr.response))
-          }else{
+          } else {
             reject(xhr.response);
           }
-          
+
         }
       }
       xhr.open('POST', url, true);

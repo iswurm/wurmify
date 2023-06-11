@@ -35,13 +35,6 @@
                     El año es obligatorio.
                 </span>
             </p>
-            <div>
-                <label for="">Album pic: </label>
-                <div class="imageEdit">
-                    <img src="{{urlAWS + album.image}}" alt="">
-                </div>
-                <input type="file" name="image" placeholder="Upload an album picture" (change)="fileChangeEvent($event)">
-            </div>
             <input type="submit" value="Create Album" class="btn-spotify" [disabled]="!formAlbum.form.valid">
         </form>
     </div>

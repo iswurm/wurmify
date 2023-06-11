@@ -39,7 +39,6 @@ export class ArtistEditComponent {
       let id = params['id'];
       this._artistService.getArtist(this.token, id).subscribe((data: any)=>{
         this.artist = data.artist;
-        console.log(this.artist);
       })
     })
   }
@@ -54,8 +53,6 @@ export class ArtistEditComponent {
           this.makeFileRequest(this.url+'upload-image-artist/'+id, [], this.filesToUpload, this.token, "image").then(
             (result: any) =>{
               this.artist.image = result.image;
-              console.log(this.artist);
-              console.log("IMAGEN: " + result.image);
               this._router.navigate(['/artists', 1]);
             }
           );

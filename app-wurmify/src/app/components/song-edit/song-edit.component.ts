@@ -53,20 +53,25 @@ export class SongEditComponent {
   onSubmit() {
     this._route.params.forEach((params: Params) => {
       let songId = params['id'];
-      console.log(songId);
-      this._songService.editSong(this.token, songId, this.song).subscribe((data)=>{
-        if (this.filesToUpload.length < 1) {
-          console.log(this.song);
-        } else {
-          this.makeFileRequest(this.url + 'upload-song-file/' + songId, [], this.filesToUpload, this.token, "song").then(
-            (result: any) => {
-              this.song.file = result.file;
-              //this._router.navigate(['/artists', 1]);
-            }
-          );
+      this._songService.editSong(this.token, songId, this.song).subscribe((data) => {
+        if (this.filesToUpload.length == 0) {
+          this._router.navigate(['/artists', 1]);
         }
-      });
-    })
+        else {
+          if (this.filesToUpload.length < 1) {
+            this._router.navigate(['/artists', 1]);
+          } else {
+            this.makeFileRequest(this.url + 'upload-song-file/' + songId, [], this.filesToUpload, this.token, "song").then(
+              (result: any) => {
+                this.song.file = result;
+                console.log(result);
+                this._router.navigate(['/artists', 1]);
+              }
+            );
+          }
+        }
+      })
+    });
   }
 
   fileChangeEvent(fileInput: any) {

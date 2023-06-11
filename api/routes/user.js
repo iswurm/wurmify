@@ -10,7 +10,6 @@ var multipart = require('connect-multiparty');
 var md_upload = multipart({ uploadDir: './uploads/users'});
 
 //EN POSTMAN --> HEADERS: Authorization: [meter el token jwt]
-router.get('/controlador', md_auth.ensureAuth, UserController.pruebas);
 router.post('/register', UserController.saveUser);
 router.get('/usuarios', md_auth.ensureAuth, UserController.findAll);
 router.post('/login', UserController.loginUser);

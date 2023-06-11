@@ -1,4 +1,5 @@
 'use strict'
+require('dotenv').config();
 const bcrypt = require('bcrypt');
 var User = require('../models/user')
 const mongoose = require('mongoose');
@@ -9,14 +10,10 @@ var path = require('path');
 
 const AWS = require('aws-sdk');
 AWS.config.update({
-  accessKeyId: 'AKIAU727EPNRDMRYWXPS',
-  secretAccessKey: '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'
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 const s3 = new AWS.S3();
-
-async function pruebas(req, res) {
-  res.status(200).send({ message: "Controlador OK" });
-}
 
 async function saveUser(req, res) {
   var user = new User();
@@ -32,15 +29,12 @@ async function saveUser(req, res) {
     var hash = bcrypt.hashSync(params.password, 10);
     user.password = hash;
     if (user.name != null && user.surname != null && user.email != null) {
-      //save
 
       try {
         const result = await usuarios.findOne({ 'email': user.email });
-        console.log(result);
-        if(!result){
+        if (!result) {
           try {
             await new usuarios(user).save();
-            console.log("good");
             return res.send({
               status: user
             });
@@ -50,7 +44,7 @@ async function saveUser(req, res) {
             })
           }
         }
-        
+
       } catch (error) {
         return res.status(400).send({
           status: 'failure' + error
@@ -114,16 +108,15 @@ async function uploadImage(req, res) {
         }
         s3.upload(params, (err, data) => {
           if (err) {
-            console.log("fail");
+            return res.status(400).send({
+              status: 'No se ha podido subir la imagen'
+            });
           } else {
-            console.log(data);
+            return res.status(200).send({
+              status: data.Location
+            });
           }
-
         })
-        return res.send({
-          image: fileName,
-          user: user
-        });
       } catch (error) {
         return res.status(400).send({
           status: 'No se ha podido modificar la imagen'
@@ -142,7 +135,6 @@ async function getImageFile(req, res) {
   var imageFile = req.params.imageFile;
   var pathFile = './uploads/users/' + imageFile;
   let exists = fs.existsSync(pathFile);
-  console.log(exists);
   if (exists) {
     res.sendFile(path.resolve(pathFile));
   } else {
@@ -155,15 +147,11 @@ async function loginUser(req, res) {
     const usuario = req.body;
     const usuarioLeido = await usuarios.findOne({ 'email': usuario.email });
     if (usuarioLeido) {
-      console.log("usuario:");
-      console.log(usuarioLeido);
       if (!isValidPassword(usuarioLeido, usuario.password)) {
         console.log('Invalid Password');
       } else {
         // SI gethash ES TRUE, GENERA UN TOKEN JWT
         if (req.body.gethash) {
-          console.log("ole");
-          console.log(usuario.password);
           return res.status(200).send({
             token: jwt.createToken(usuario)
           })
@@ -191,4 +179,4 @@ function isValidPassword(user, password) {
   return result;
 }
 
-module.exports = { pruebas, saveUser, findAll, loginUser, updateUser, uploadImage, getImageFile };
+module.exports = { saveUser, findAll, loginUser, updateUser, uploadImage, getImageFile };

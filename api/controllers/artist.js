@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').config();
 var path = require('path');
 var fs = require('fs');
 var mongoosePagination = require('mongoose-pagination');
@@ -15,8 +16,8 @@ const canciones = mongoose.model('Song');
 
 const AWS = require('aws-sdk');
 AWS.config.update({
-  accessKeyId: 'AKIAU727EPNRDMRYWXPS',
-  secretAccessKey: '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'
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 const s3 = new AWS.S3();
 
@@ -43,7 +44,7 @@ async function saveArtist(req, res) {
             status: "errorrrr"
           })
         }
-      }else{
+      } else {
         return res.send({
           status: "errorrrr"
         })
@@ -92,7 +93,6 @@ async function getArtistPaginado(req, res) {
   var itemsPerPage = 3;
   try {
     const artists = await Artist.find().sort('name').paginate(page, itemsPerPage);
-    console.log(artists);
     if (!artists) {
       return res.status(404).send("No existen artistas");
     } else {
@@ -127,7 +127,6 @@ async function updateArtist(req, res) {
 async function uploadImage(req, res) {
   var artistId = req.params.id;
   var fileName = 'No subido';
-  console.log(req.files);
   if (req.files.image) {
     var filePath = req.files.image.path;
     var fileSplit = filePath.split('\\');
@@ -146,16 +145,15 @@ async function uploadImage(req, res) {
         }
         s3.upload(params, (err, data) => {
           if (err) {
-            console.log("fail");
+            return res.status(400).send({
+              status: 'No se ha podido subir la imagen'
+            });
           } else {
-            console.log(data);
+            return res.status(200).send({
+              status: data.Location
+            });
           }
-
         })
-        return res.send({
-          image: fileName,
-          artist: artist
-        });
       } catch (error) {
         return res.status(400).send({
           status: 'No se ha podido modificar la imagen'
@@ -174,7 +172,6 @@ async function getImageFile(req, res) {
   var imageFile = req.params.imageFile;
   var pathFile = './uploads/artists/' + imageFile;
   let exists = fs.existsSync(pathFile);
-  console.log(exists);
   if (exists) {
     res.sendFile(path.resolve(pathFile));
   } else {

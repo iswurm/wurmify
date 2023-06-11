@@ -28,14 +28,6 @@
                     El title es obligatorio
                 </span>
             </p>
-            <p>
-                <label for="">Duration:</label>
-                <input type="text" #duration="ngModel" name="duration" [(ngModel)]="song.duration" class="form-control"
-                    required>
-                <span *ngIf="!duration.valid && duration.touched">
-                    La duración es obligatoria
-                </span>
-            </p>
             <div>
                 <label for="">Song file: </label>
                 <div class="song" *ngIf="song.file">

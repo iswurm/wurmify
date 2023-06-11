@@ -52,13 +52,11 @@ export class PlayerComponent {
     this._albumService.getAlbum(this.token, this.song.album).subscribe((data: any) => {
       this.album = data;
       this.artist = JSON.parse(JSON.stringify(this.album.artist));
-      console.log(this.artist);
     })
   }
 
   getArtist(){
       this._artistService.getArtist(this.token, this.album.artist).subscribe((data: any)=>{
-        console.log(data)
         this.artist = data;
       })
   }

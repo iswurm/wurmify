@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').config();
 var path = require('path');
 var fs = require('fs');
 var mongoosePagination = require('mongoose-pagination');
@@ -13,8 +14,8 @@ const albumes = mongoose.model('Album');
 const canciones = mongoose.model('Song'); 
 const AWS = require('aws-sdk');
 AWS.config.update({
-    accessKeyId: 'AKIAU727EPNRDMRYWXPS',
-    secretAccessKey: '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'
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY
 });
 const s3 = new AWS.S3();
 
@@ -103,7 +104,6 @@ async function getAlbums(req, res) {
             return res.send(albumesObtenidos && albumesObtenidos.length ? albumesObtenidos : []);
         } else {
             const albumesObtenidos = await albumes.find({ artist: artistId }).populate({ path: 'artist' });
-            console.log(albumesObtenidos);
             return res.send(albumesObtenidos && albumesObtenidos.length ? albumesObtenidos : []);
         }
     } catch (error) {
@@ -145,7 +145,6 @@ async function deleteAlbum(req, res) {
 async function uploadImage(req, res) {
     var albumId = req.params.id;
     var fileName = 'No subido';
-    console.log(req.files.image);
     if (req.files) {
         var filePath = req.files.image.path;
         var fileSplit = filePath.split('\\');
@@ -164,16 +163,15 @@ async function uploadImage(req, res) {
                 }
                 s3.upload(params, (err, data) => {
                     if (err) {
-                        console.log("fail");
+                        return res.status(400).send({
+                            status: 'No se ha podido subir la imagen'
+                        });
                     } else {
-                        console.log(data);
+                        return res.status(200).send({
+                            status: data.Location
+                        });
                     }
-
                 })
-                return res.send({
-                    image: fileName,
-                    album: album
-                });
             } catch (error) {
                 return res.status(400).send({
                     status: 'No se ha podido modificar la imagen'
@@ -192,7 +190,6 @@ async function getImageFile(req, res) {
     var imageFile = req.params.imageFile;
     var pathFile = './uploads/albums/' + imageFile;
     let exists = fs.existsSync(pathFile);
-    console.log(exists);
     if (exists) {
         res.sendFile(path.resolve(pathFile));
     } else {

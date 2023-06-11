@@ -51,7 +51,6 @@ export class AlbumAddComponent {
       let artistId = params['artist'];
       this.album.artist = artistId;
     })
-    console.log(this.album);
     this._albumService.addAlbum(this.token, this.album).subscribe((data: any)=>{
       this._router.navigate(['edit-album/'+data.status._id]);
     });
