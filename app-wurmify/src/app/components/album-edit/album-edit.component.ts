@@ -55,7 +55,7 @@ export class AlbumEditComponent {
           if(this.filesToUpload.length < 1){
             this._router.navigate(['/artists', 1]);
           }else{
-            this.makeFileRequest(this.apiProdUrl+'upload-image-album/'+id, [], this.filesToUpload, this.token, "image").then(
+            this.makeFileRequest(this.url+'upload-image-album/'+id, [], this.filesToUpload, this.token, "image").then(
               (result: any) =>{
                 this.album.image = result.image;
                 this._router.navigate(['/artists', 1]);

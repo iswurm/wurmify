@@ -34,10 +34,13 @@
                 <label for="">Email:</label>
                 <input type="text" #email="ngModel" name="email" [(ngModel)]="user.email" class="form-control" required>
             </p>
-            <p>
-                <label for="">Profile pic: </label>
-                <input type="file" name="image" placeholder="Upload your profile picture" (change)="fileChangeEvent($event)">
-            </p>
+            <div *ngIf="identity.role == 'ROLE_ADMIN'">
+                <p>
+                    <label for="">Profile pic: </label><br>
+                    <input type="file" name="image" placeholder="Upload your profile picture" (change)="fileChangeEvent($event)">
+                </p>
+            </div>
+
             <input type="submit" value="Actualizar usuario" class="btn btn-spotify">
         </form>
     </div>

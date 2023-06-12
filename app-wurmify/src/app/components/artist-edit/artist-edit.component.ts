@@ -51,7 +51,7 @@ export class ArtistEditComponent {
         if(!this.filesToUpload){
           alert("no hay imagen");
         }else{
-          this.makeFileRequest(this.apiProdUrl+'upload-image-artist/'+id, [], this.filesToUpload, this.token, "image").then(
+          this.makeFileRequest(this.url+'upload-image-artist/'+id, [], this.filesToUpload, this.token, "image").then(
             (result: any) =>{
               this.artist.image = result.image;
               this._router.navigate(['/artists', 1]);
@@ -73,7 +73,6 @@ export class ArtistEditComponent {
       for(var i = 0; i < files.length; i++){
         formData.append(name, files[i], files[i].name);
       }
-
       xhr.onreadystatechange = function(){
         if(xhr.readyState == 4){
           if(xhr.status == 200){
@@ -81,7 +80,6 @@ export class ArtistEditComponent {
           }else{
             reject(xhr.response);
           }
-          
         }
       }
       xhr.open('POST', url, true);

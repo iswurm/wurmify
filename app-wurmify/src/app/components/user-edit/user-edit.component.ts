@@ -44,7 +44,7 @@ export class UserEditComponent {
         if (this.filesToUpload.length < 1) {
           this._router.navigate(['/artists', 1]);
         } else {
-          this.makeFileRequest(this.apiProdUrl + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
+          this.makeFileRequest(this.url + 'upload-image-user/' + this.user._id, [], this.filesToUpload).then(
             (result: any) => {
               this.user.image = result;
               this._router.navigate(['/artists', 1]);
@@ -57,31 +57,33 @@ export class UserEditComponent {
 
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
-
   }
 
   makeFileRequest(url: string, params: Array<String>, files: Array<File>) {
     var token = this.token;
     return new Promise(function (resolve, reject) {
-      var formData: any = new FormData();
-      var xhr = new XMLHttpRequest();
-      for (var i = 0; i < files.length; i++) {
-        formData.append('image', files[i], files[i].name);
-      }
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-          if (xhr.status == 200) {
-            resolve(JSON.parse(xhr.response))
-          } else {
-            reject(xhr.response);
-          }
-
+      try {
+        var formData: any = new FormData();
+        var xhr = new XMLHttpRequest();
+        for (var i = 0; i < files.length; i++) {
+          formData.append('image', files[i]);
         }
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+              resolve(JSON.parse(xhr.response))
+            } else {
+              reject(xhr.response);
+            }
+          }
+        }
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('authorization', token);
+        xhr.send(formData);
+
+      } catch (error) {
+
       }
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader('authorization', token);
-      xhr.send(formData);
     })
   }
 

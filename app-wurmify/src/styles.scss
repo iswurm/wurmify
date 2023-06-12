@@ -142,9 +142,6 @@ body {
     overflow: hidden;
 }
 
-
-#player audio {}
-
 #mp3-source {
     width: 100%;
 }
@@ -180,8 +177,6 @@ body {
     font-size: small;
     color: rgb(193, 193, 193);
 }
-
-.cancion {}
 
 ul {
     list-style: none;
@@ -544,4 +539,20 @@ ul {
 
 footer{
     margin-bottom: 12rem;
+}
+
+.navbar-toggler-icon{
+    
+}
+
+.my-toggler{
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+        background-image: var(--bs-navbar-toggler-icon-bg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+        color: white;
 }

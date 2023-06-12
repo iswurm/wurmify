@@ -34,10 +34,4 @@ app.use('/api', artist_routes);
 app.use('/api', album_routes);
 app.use('/api', song_routes);
 
-/*
-app.get('/pruebas', function(req, res){
-    res.status(200).send({message: "Todo ok"});
-});
-*/
-
 module.exports = app;
