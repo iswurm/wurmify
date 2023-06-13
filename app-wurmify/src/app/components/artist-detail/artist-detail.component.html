@@ -13,9 +13,12 @@
         <div class="artist-head-card">
             <div class="row">
                 <div *ngIf="artist.image" class="col-xl-3 col-lg-3 col-md-5 col-xs-2 col-sm-5">
-                    <img src="{{urlAWS + artist.image}}" class="card-img-top" id="imagen-artista" alt="" style="  
-                width: 11rem;
-                box-shadow: 10px 5px 5px black;">
+                    <img *ngIf="artist.image== 'null'" src="https://wurmify.s3.eu-west-3.amazonaws.com/3bp8Cojl234GBpn0qzAMd0bI.png" alt="Imagen del artista" style="  
+                    width: 11rem;
+                    box-shadow: 10px 5px 5px black;">
+                    <img *ngIf="artist.image!= 'null'" src="{{urlAWS + artist.image}}" alt="Imagen del artista" style="  
+                    width: 11rem;
+                    box-shadow: 10px 5px 5px black;">
                 </div>
                 <div class="col-xl-8 col-lg-8 col-md-7 col-xs-2 col-sm-5">
                     <h2>{{artist.name}}</h2>
@@ -30,7 +33,8 @@
                 <h5>Discografía</h5>
                 <li *ngFor="let album of albums" class="col-lg-4 album-item" style="margin: 6px;">
                     <div class="card card-spotify" style="width: 18rem;">
-                        <img src="{{urlAWS + album.image}}" alt="Imagen del álbum">
+                        <img *ngIf="album.image== 'null'" src="https://wurmify.s3.eu-west-3.amazonaws.com/3bp8Cojl234GBpn0qzAMd0bI.png" alt="Imagen del álbum">
+                        <img *ngIf="album.image!= 'null'" src="{{urlAWS + album.image}}" alt="Imagen del álbum">
                         <div class="card-body">
                             <h5 class="card-title album-name"><a id="enlace-artist-detail"
                                     [routerLink]="['/album', album._id]">{{album.title}}</a></h5>

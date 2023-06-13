@@ -35,7 +35,8 @@
             <div>
                 <label for="">Foto del artista: </label>
                 <div class="imageEdit" *ngIf="artist.image">
-                    <img src="{{urlAWS + artist.image}}" alt="">
+                    <img *ngIf="artist.image== 'null'" src="https://wurmify.s3.eu-west-3.amazonaws.com/3bp8Cojl234GBpn0qzAMd0bI.png" alt="Imagen del artista">
+                    <img *ngIf="artist.image!= 'null'" src="{{urlAWS + artist.image}}" alt="Imagen del artista">
                 </div>
                 <input type="file" name="image" placeholder="Upload an artist picture" (change)="fileChangeEvent($event)">
             </div>

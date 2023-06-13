@@ -16,7 +16,10 @@
         <div class="row" style="margin-bottom: 12px;">
             <div class="col-xl-3 col-lg-3 col-md-5 col-xs-2 col-sm-5">
                 <div class="pic">
-                    <img src="{{urlAWS + album.image}}" alt="Imagen del álbum" style="  
+                    <img *ngIf="album.image== 'null'" src="https://wurmify.s3.eu-west-3.amazonaws.com/3bp8Cojl234GBpn0qzAMd0bI.png" alt="Imagen del álbum" style="  
+                    width: 11rem;
+                    box-shadow: 10px 5px 5px black;">
+                    <img *ngIf="album.image!= 'null'" src="{{urlAWS + album.image}}" alt="Imagen del álbum" style="  
                     width: 11rem;
                     box-shadow: 10px 5px 5px black;">
                 </div>

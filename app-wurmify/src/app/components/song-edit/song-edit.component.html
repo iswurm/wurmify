@@ -14,22 +14,22 @@
     <div class="formSong">
         <form #formSong="ngForm" (submit)="onSubmit()" class="col-md-10">
             <p>
-                <label for="">Number:</label>
+                <label for="">Número:</label>
                 <input type="number" #number="ngModel" name="number" [(ngModel)]="song.number" class="form-control"
                     required>
                 <span *ngIf="!name.valid && name.touched">
-                    El number es obligatorio
+                    El número es obligatorio
                 </span>
             </p>
             <p>
-                <label for="">Name:</label>
+                <label for="">Título:</label>
                 <input type="text" #name="ngModel" name="name" [(ngModel)]="song.name" class="form-control" required>
                 <span *ngIf="!name.valid && name.touched">
-                    El title es obligatorio
+                    El título es obligatorio
                 </span>
             </p>
             <div>
-                <label for="">Song file: </label>
+                <label for="">Archivo de sonido: </label>
                 <div class="song" *ngIf="song.file">
                     <audio controls>
                         <source src="{{urlAWS + song.file}}">

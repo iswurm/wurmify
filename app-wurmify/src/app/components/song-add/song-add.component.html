@@ -15,17 +15,17 @@
 <div class="formSong">
     <form #formSong="ngForm" (submit)="onSubmit()" class="col-md-10">
         <p>
-            <label for="">Number:</label>
+            <label for="">Número:</label>
             <input type="number" #number="ngModel" name="number" [(ngModel)]="song.number" class="form-control" required>
             <span *ngIf="!number.valid && (number.dirty || number.touched)">
-                El number es obligatorio
+                El número es obligatorio
             </span>
         </p>
         <p>
-            <label for="">Name:</label>
+            <label for="">Título:</label>
             <input type="text" #name="ngModel" name="name" [(ngModel)]="song.name" class="form-control" required>
             <span *ngIf="!name.valid && (name.dirty || name.touched)">
-                El title es obligatorio
+                El título es obligatorio
             </span>
         </p>
         <input type="submit" value="Añadir canción" class="btn-spotify" [disabled]="!formSong.form.valid">

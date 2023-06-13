@@ -31,7 +31,8 @@
             <div *ngFor="let artist of artists" class="col-lg-3 col-xl-3 col-sm-8 col-md-9" id="card">
                 <div class="card card-spotify" style="width: 18rem;">
                     <div class="contenerdor-img-card">
-                            <img src="{{urlAWS + artist.image}}" class="card-img-top" alt="Imagen del artista">
+                            <img *ngIf="artist.image== 'null'" src="https://wurmify.s3.eu-west-3.amazonaws.com/3bp8Cojl234GBpn0qzAMd0bI.png" alt="Imagen del artista">
+                            <img *ngIf="artist.image!= 'null'" src="{{urlAWS + artist.image}}" alt="Imagen del artista">
                         </div>
                     <div class="card-body">
                         <h5 class="card-title album-name"><a id="enlace-artist-detail"
