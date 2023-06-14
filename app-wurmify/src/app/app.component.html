@@ -136,23 +136,26 @@ justify-content: center;">
                         <p>
                             Plataforma independiente para el streaming de tus artistas favoritos.
                         </p>
+                        <p>
+                            <a class="text-white" href="https://wurmify.s3.eu-west-3.amazonaws.com/Memoria+Ignacio+S%C3%A1nchez+Wurm.pdf">Memoria del Proyecto</a>
+                        </p>
                     </div>
                     <!-- Grid column -->
 
                     <!-- Grid column -->
                     <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold">Products</h6>
+                        <h6 class="text-uppercase fw-bold">Mapa Web</h6>
                         <hr class="mb-4 mt-0 d-inline-block mx-auto"
                             style="width: 60px; background-color: #7c4dff; height: 2px" />
                         <p>
-                            <a href="#!" class="text-white">MDBootstrap</a>
+                            <a class="text-white" [routerLink]="['/']" [routerLinkActive]="['actived']">Inicio</a>
                         </p>
                         <p>
-                            <a href="#!" class="text-white">BrandFlow</a>
+                            <a class="text-white" [routerLink]="['/artists', 1]" [routerLinkActive]="['actived']">Artistas </a>
                         </p>
                         <p>
-                            <a href="#!" class="text-white">Bootstrap Angular</a>
+                            <a class="text-white" [routerLink]="['/songs']" [routerLinkActive]="['actived']">Biblioteca</a>
                         </p>
                     </div>
                     <!-- Grid column -->
